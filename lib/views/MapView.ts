@@ -1,24 +1,9 @@
-interface MapViewProperties {
-  container: string;
-}
+import DOMContainer, { DOMContainerProperties } from "./DOMContainer";
 
-export default class MapView {
-  container: HTMLDivElement;
-  canvas: HTMLCanvasElement;
+interface MapViewProperties extends DOMContainerProperties {}
+
+export default class MapView extends DOMContainer {
   constructor(properties: MapViewProperties) {
-    this.container = document.getElementById(
-      properties.container
-    ) as HTMLDivElement;
-    this.canvas = this.createCanvasContainer();
-  }
-  private createCanvasContainer() {
-    const canvas = document.createElement("canvas");
-    canvas.style.width = "100%";
-    canvas.style.height = "100%";
-    canvas.style.display = "block";
-    canvas.width = this.container.clientWidth;
-    canvas.height = this.container.clientHeight;
-    this.container.appendChild(canvas);
-    return canvas;
+    super(properties);
   }
 }
