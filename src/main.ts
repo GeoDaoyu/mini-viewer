@@ -7,6 +7,8 @@ const map = new Map();
 const view = new MapView({
   map,
   container: "view",
+  center: [120, 30],
+  zoom: 4,
 });
 const layer = new MapImageLayer({
   id: "World_Street_Map",

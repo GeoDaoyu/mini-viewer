@@ -1,4 +1,5 @@
 import LayerView from "./LayerView";
+import { lngLatToXY } from "../../geometry/support/webMercatorUtils";
 
 export default class MapImageLayerView extends LayerView {
   async render() {
@@ -24,25 +25,10 @@ export default class MapImageLayerView extends LayerView {
       img.onload = () => {
         const ctx = canvas.getContext("2d");
         if (!ctx) {
-          throw new Error("Could not get canvas context");
+          throw new Error("No canvas context");
         }
-
-        // 保存当前Canvas状态（用于增量绘制）
-        const imageData = ctx.getImageData(0, 0, width, height);
-
-        // 清除Canvas（可选，取决于你是否需要叠加效果）
-        // ctx.clearRect(0, 0, width, height);
-
-        // 绘制新图片（增量绘制）
         ctx.drawImage(img, 0, 0, width, height);
-
-        // 如果你需要叠加效果，可以在这里处理imageData
-        // 例如：ctx.putImageData(imageData, 0, 0);
-
-        // 释放URL对象
         URL.revokeObjectURL(imgUrl);
-
-        console.log("Image rendered successfully");
       };
 
       img.onerror = (error) => {
@@ -56,10 +42,6 @@ export default class MapImageLayerView extends LayerView {
     }
   }
   getBBox(): [number, number, number, number] {
-    return [
-      1.2385929901839022e7, 9318937.485669367, 7.065878105906263e7,
-      4.635876595402607e7,
-    ];
     const { tileInfo, zoom, canvas, center } = this.view;
     const currentLOD = tileInfo.lods.find((lod) => lod.level === zoom);
     if (!currentLOD) {
@@ -67,14 +49,14 @@ export default class MapImageLayerView extends LayerView {
     }
 
     const resolution = currentLOD.resolution;
-
     const width = canvas.width;
     const height = canvas.height;
 
     const halfWidthMapUnits = (width * resolution) / 2;
     const halfHeightMapUnits = (height * resolution) / 2;
 
-    const [centerX, centerY] = center as number[];
+    const [centerX, centerY] = lngLatToXY(center![0], center![1]);
+
     const xmin = centerX - halfWidthMapUnits;
     const xmax = centerX + halfWidthMapUnits;
     const ymin = centerY - halfHeightMapUnits;
