@@ -19,24 +19,14 @@ export default class MapImageLayerView extends LayerView {
       }
 
       const blob = await response.blob();
-      const imgUrl = URL.createObjectURL(blob);
 
-      const img = new Image();
-      img.onload = () => {
-        const ctx = canvas.getContext("2d");
-        if (!ctx) {
-          throw new Error("No canvas context");
-        }
-        ctx.drawImage(img, 0, 0, width, height);
-        URL.revokeObjectURL(imgUrl);
-      };
+      const imageBitmap = await createImageBitmap(blob);
 
-      img.onerror = (error) => {
-        console.error("Error loading image:", error);
-        URL.revokeObjectURL(imgUrl);
-      };
+      const ctx = this.view.canvas.getContext("2d");
+      if (!ctx) return;
 
-      img.src = imgUrl;
+      ctx.clearRect(0, 0, width, height);
+      ctx.drawImage(imageBitmap, 0, 0, width, height);
     } catch (error) {
       console.error("Error in render method:", error);
     }
