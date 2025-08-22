@@ -29,3 +29,16 @@
   解析pbf，绘制切片和要素样式。
 - [ ] 优化
   加载效率优化、交互优化等。
+
+## Development
+
+```bash
+# install dependencies
+$ pnpm install
+
+# develop library by docs demo
+$ pnpm start
+
+# build library source code
+$ pnpm run build
+```
