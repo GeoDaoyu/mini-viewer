@@ -13,6 +13,7 @@ export default class DOMContainer {
     }
     this.container = containerElement as HTMLDivElement;
     this.canvas = this.createCanvasContainer();
+    this.bindCanvasEvents();
   }
 
   private createCanvasContainer(): HTMLCanvasElement {
@@ -25,4 +26,13 @@ export default class DOMContainer {
     this.container.appendChild(canvas);
     return canvas;
   }
+
+  private bindCanvasEvents(): void {
+    this.canvas.addEventListener("wheel", (event: WheelEvent) => {
+      this.handleWheel(event);
+    });
+  }
+
+  // @ts-ignore
+  protected handleWheel(event: WheelEvent): void {}
 }

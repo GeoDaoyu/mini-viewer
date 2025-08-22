@@ -55,7 +55,7 @@ export default class MapImageLayerView extends LayerView {
     const halfWidthMapUnits = (width * resolution) / 2;
     const halfHeightMapUnits = (height * resolution) / 2;
 
-    const [centerX, centerY] = lngLatToXY(center![0], center![1]);
+    const [centerX, centerY] = lngLatToXY(center[0], center[1]);
 
     const xmin = centerX - halfWidthMapUnits;
     const xmax = centerX + halfWidthMapUnits;
