@@ -3,8 +3,8 @@ export interface DOMContainerProperties {
 }
 
 export default class DOMContainer {
-  protected container: HTMLDivElement;
-  protected canvas: HTMLCanvasElement;
+  private container: HTMLDivElement;
+  public canvas: HTMLCanvasElement;
 
   constructor(properties: DOMContainerProperties) {
     const containerElement = document.getElementById(properties.container);
@@ -15,7 +15,7 @@ export default class DOMContainer {
     this.canvas = this.createCanvasContainer();
   }
 
-  protected createCanvasContainer(): HTMLCanvasElement {
+  private createCanvasContainer(): HTMLCanvasElement {
     const canvas = document.createElement("canvas");
     canvas.style.width = "100%";
     canvas.style.height = "100%";

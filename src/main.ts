@@ -11,8 +11,6 @@ const view = new MapView({
 const layer = new MapImageLayer({
   id: "World_Street_Map",
   title: "World_Street_Map",
-  url: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/World_Street_Map/MapServer",
+  url: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/WorldTimeZones/MapServer",
 });
-map.add(layer);
-
-console.log(view);
+view.map.add(layer);
