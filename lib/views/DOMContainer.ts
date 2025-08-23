@@ -27,12 +27,22 @@ export default class DOMContainer {
     return canvas;
   }
 
+  // TODO: destroy
   private bindCanvasEvents(): void {
     this.canvas.addEventListener("wheel", (event: WheelEvent) => {
       this.handleWheel(event);
     });
     this.canvas.addEventListener("dblclick", (event: MouseEvent) => {
       this.handleDoubleClick(event);
+    });
+    this.canvas.addEventListener("mousedown", (event: MouseEvent) => {
+      this.handleMouseDown(event);
+    });
+    this.canvas.addEventListener("mousemove", (event: MouseEvent) => {
+      this.handleMouseMove(event);
+    });
+    this.canvas.addEventListener("mouseup", (event: MouseEvent) => {
+      this.handleMouseUp(event);
     });
   }
 
@@ -41,6 +51,18 @@ export default class DOMContainer {
   }
 
   protected handleDoubleClick(event: MouseEvent): void {
+    event.preventDefault();
+  }
+
+  protected handleMouseMove(event: MouseEvent): void {
+    event.preventDefault();
+  }
+
+  protected handleMouseUp(event: MouseEvent): void {
+    event.preventDefault();
+  }
+
+  protected handleMouseDown(event: MouseEvent): void {
     event.preventDefault();
   }
 }
