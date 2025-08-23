@@ -52,4 +52,11 @@ export default class MapView extends DOMContainer {
     // TODO: watch()
     this.render();
   }
+  protected handleDoubleClick(event: MouseEvent): void {
+    event.preventDefault();
+    const delta = 1;
+    this.zoom = Math.max(0, Math.min(23, this.zoom + delta));
+    // TODO: watch()
+    this.render();
+  }
 }

@@ -31,8 +31,16 @@ export default class DOMContainer {
     this.canvas.addEventListener("wheel", (event: WheelEvent) => {
       this.handleWheel(event);
     });
+    this.canvas.addEventListener("dblclick", (event: MouseEvent) => {
+      this.handleDoubleClick(event);
+    });
   }
 
-  // @ts-ignore
-  protected handleWheel(event: WheelEvent): void {}
+  protected handleWheel(event: WheelEvent): void {
+    event.preventDefault();
+  }
+
+  protected handleDoubleClick(event: MouseEvent): void {
+    event.preventDefault();
+  }
 }
