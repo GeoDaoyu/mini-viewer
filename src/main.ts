@@ -1,7 +1,8 @@
 import "./style.css";
 import MapView from "../lib/views/MapView";
 import Map from "../lib/Map";
-import MapImageLayer from "../lib/layers/Layer";
+import MapImageLayer from "../lib/layers/MapImageLayer";
+import TileLayer from "../lib/layers/TileLayer";
 
 const map = new Map();
 const view = new MapView({
@@ -10,9 +11,16 @@ const view = new MapView({
   center: [120, 30],
   zoom: 4,
 });
-const layer = new MapImageLayer({
+const mapImageLayer = new MapImageLayer({
   id: "World_Street_Map",
   title: "World_Street_Map",
   url: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/WorldTimeZones/MapServer",
 });
-view.map.add(layer);
+// view.map.add(mapImageLayer);
+
+const tileLayer = new TileLayer({
+  id: "OSM Tile",
+  title: "OSM Tile",
+  url: "",
+});
+view.map.add(tileLayer);
