@@ -104,7 +104,7 @@ export default class MapView extends DOMContainer {
 
     event.preventDefault();
   }
-  protected handleMouseMove(event: MouseEvent): void {
+  protected handleMouseMove(): void {
     // debounce
   }
   protected handleMouseUp(event: MouseEvent): void {
