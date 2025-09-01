@@ -1,4 +1,3 @@
-import "./style.css";
 import { Map, MapView, TileLayer } from "./osm-viewer.js";
 
 const map = new Map();
