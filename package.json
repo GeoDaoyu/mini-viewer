@@ -16,7 +16,7 @@
     "require": "./dist/osm-viewer.umd.cjs"
   },
   "scripts": {
-    "dev": "vite",
+    "start": "vite",
     "build": "tsc && vite build"
   },
   "devDependencies": {
