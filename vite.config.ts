@@ -1,12 +1,12 @@
 import { defineConfig } from "vite";
 
 export default defineConfig({
-  base: "/osm-viewer",
+  base: "/mini-viewer",
   build: {
     lib: {
       entry: "./lib/main.ts",
-      name: "osm-viewer",
-      fileName: "osm-viewer",
+      name: "mini-viewer",
+      fileName: "mini-viewer",
     },
   },
 });

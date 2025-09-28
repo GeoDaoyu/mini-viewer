@@ -1,4 +1,4 @@
-import { Map, MapView, TileLayer } from "./osm-viewer.js";
+import { Map, MapView, TileLayer } from "./mini-viewer.js";
 
 const map = new Map();
 const view = new MapView({

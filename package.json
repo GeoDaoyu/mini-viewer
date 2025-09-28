@@ -1,5 +1,5 @@
 {
-  "name": "osm-viewer",
+  "name": "mini-viewer",
   "private": true,
   "version": "0.0.2",
   "type": "module",
@@ -7,13 +7,13 @@
     "dist",
     "index.d.ts"
   ],
-  "main": "./dist/osm-viewer.umd.cjs",
-  "module": "./dist/osm-viewer.js",
+  "main": "./dist/mini-viewer.umd.cjs",
+  "module": "./dist/mini-viewer.js",
   "types": "./index.d.ts",
   "exports": {
     "types": "./index.d.ts",
-    "import": "./dist/osm-viewer.js",
-    "require": "./dist/osm-viewer.umd.cjs"
+    "import": "./dist/mini-viewer.js",
+    "require": "./dist/mini-viewer.umd.cjs"
   },
   "scripts": {
     "start": "vite",
@@ -24,4 +24,3 @@
     "vite": "^7.0.6"
   }
 }
-
