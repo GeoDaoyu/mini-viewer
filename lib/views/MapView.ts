@@ -3,6 +3,7 @@ import TileInfo from "../layers/support/TileInfo";
 import Map from "../Map";
 import type Layer from "../layers/Layer";
 import LayerView from "./layers/LayerView";
+import { reactiveUtils } from "@geodaoyu/accessor";
 
 interface MapViewProperties extends DOMContainerProperties {
   zoom?: number;
@@ -28,19 +29,21 @@ export default class MapView extends DOMContainer {
     this.tileInfo = TileInfo.WebMercator;
     this.layerViews = [];
 
-    this.map = this.observableMap(properties.map);
-  }
-  private observableMap(map: Map) {
-    return new Proxy(map, {
-      set: (target, property, value, receiver) => {
-        const result = Reflect.set(target, property, value, receiver);
-        if (property === "layers") {
-          this.createLayerView(value);
-          this.render();
-        }
-        return result;
+    this.map = properties.map;
+    reactiveUtils.watch(
+      () => this.map.layers,
+      () => {
+        this.createLayerView(this.map.layers);
+        this.render();
       },
-    });
+    );
+
+    reactiveUtils.watch(
+      () => [this.zoom, this.center],
+      () => {
+        this.render();
+      },
+    );
   }
   private createLayerView(layers: Layer[]) {
     this.layerViews = layers.map((layer) => layer.createLayerView(this));
@@ -83,15 +86,11 @@ export default class MapView extends DOMContainer {
 
     const delta = event.deltaY > 0 ? -1 : 1;
     this.zoom = Math.max(0, Math.min(23, this.zoom + delta));
-    // TODO: watch()
-    this.render();
   }
   protected handleDoubleClick(event: MouseEvent): void {
     event.preventDefault();
     const delta = 1;
     this.zoom = Math.max(0, Math.min(23, this.zoom + delta));
-    // TODO: watch()
-    this.render();
   }
   protected handleMouseDown(event: MouseEvent): void {
     if (event.button !== 0) return;
@@ -128,7 +127,5 @@ export default class MapView extends DOMContainer {
       this.interactionStartCenter[0] - deltaLng,
       this.interactionStartCenter[1] - deltaLat,
     ];
-
-    this.render();
   }
 }

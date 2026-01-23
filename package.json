@@ -22,5 +22,8 @@
   "devDependencies": {
     "typescript": "~5.9.2",
     "vite": "^7.0.6"
+  },
+  "dependencies": {
+    "@geodaoyu/accessor": "^3.0.2"
   }
 }

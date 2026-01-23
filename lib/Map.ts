@@ -1,13 +1,15 @@
 import Layer from "./layers/Layer";
+import { Accessor } from "@geodaoyu/accessor";
 
 export interface MapProperties {
   layers?: Layer[];
 }
 
-export default class Map {
+export default class Map extends Accessor {
   public layers: Layer[];
 
   constructor(properties: MapProperties = {}) {
+    super();
     this.layers = properties.layers || [];
   }
 

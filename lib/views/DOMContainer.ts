@@ -1,12 +1,15 @@
+import { Accessor } from "@geodaoyu/accessor";
+
 export interface DOMContainerProperties {
   container: string;
 }
 
-export default class DOMContainer {
+export default class DOMContainer extends Accessor {
   private container: HTMLDivElement;
   public canvas: HTMLCanvasElement;
 
   constructor(properties: DOMContainerProperties) {
+    super();
     const containerElement = document.getElementById(properties.container);
     if (!containerElement) {
       throw new Error(`element with id '${properties.container}' not found`);

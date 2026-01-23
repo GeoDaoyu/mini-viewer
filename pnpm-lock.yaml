@@ -7,6 +7,10 @@ settings:
 importers:
 
   .:
+    dependencies:
+      '@geodaoyu/accessor':
+        specifier: ^3.0.2
+        version: 3.0.2
     devDependencies:
       typescript:
         specifier: ~5.9.2
@@ -173,6 +177,9 @@ packages:
     cpu: [x64]
     os: [win32]
 
+  '@geodaoyu/accessor@3.0.2':
+    resolution: {integrity: sha512-VT1TiVvLZJJNFe9VqGLaUXzqbLBheyqhYhmntN6qvVCnQVfNhhRGJGMOpnfNk4SW0pBuF5ZOwEsfB4QeSdymGQ==}
+
   '@rollup/rollup-android-arm-eabi@4.46.2':
     resolution: {integrity: sha512-Zj3Hl6sN34xJtMv7Anwb5Gu01yujyE/cLBDB2gnHTAHaWS1Z38L7kuSG+oAh0giZMqG060f/YBStXtMH6FvPMA==}
     cpu: [arm]
@@ -275,6 +282,12 @@ packages:
 
   '@types/estree@1.0.8':
     resolution: {integrity: sha512-dWHzHa2WqEXI/O1E9OjrocMTKJl2mSrEolh1Iomrv6U+JuNwaHXsXx9bLu5gG7BUWFIN0skIQJQ/L1rIex4X6w==}
+
+  '@vue/reactivity@3.5.27':
+    resolution: {integrity: sha512-vvorxn2KXfJ0nBEnj4GYshSgsyMNFnIQah/wczXlsNXt+ijhugmW+PpJ2cNPe4V6jpnBcs0MhCODKllWG+nvoQ==}
+
+  '@vue/shared@3.5.27':
+    resolution: {integrity: sha512-dXr/3CgqXsJkZ0n9F3I4elY8wM9jMJpP3pvRG52r6m0tu/MsAFIe6JpXVGeNMd/D9F4hQynWT8Rfuj0bdm9kFQ==}
 
   esbuild@0.25.9:
     resolution: {integrity: sha512-CRbODhYyQx3qp7ZEwzxOk4JBqmD/seJrzPa/cGjY1VtIn5E09Oi9/dB4JwctnfZ8Q8iT7rioVv5k/FNT/uf54g==}
@@ -449,6 +462,10 @@ snapshots:
   '@esbuild/win32-x64@0.25.9':
     optional: true
 
+  '@geodaoyu/accessor@3.0.2':
+    dependencies:
+      '@vue/reactivity': 3.5.27
+
   '@rollup/rollup-android-arm-eabi@4.46.2':
     optional: true
 
@@ -510,6 +527,12 @@ snapshots:
     optional: true
 
   '@types/estree@1.0.8': {}
+
+  '@vue/reactivity@3.5.27':
+    dependencies:
+      '@vue/shared': 3.5.27
+
+  '@vue/shared@3.5.27': {}
 
   esbuild@0.25.9:
     optionalDependencies:
