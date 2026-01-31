@@ -17,7 +17,8 @@
   },
   "scripts": {
     "start": "vite",
-    "build": "tsc && vite build"
+    "build": "tsc && vite build",
+    "preview": "vite build --outDir demo --emptyOutDir && cp index.html demo/"
   },
   "devDependencies": {
     "typescript": "~5.9.2",
