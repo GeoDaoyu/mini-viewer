@@ -4,7 +4,7 @@ import TileLayerView from "../views/layers/TileLayerView";
 
 export interface TileLayerProperties extends LayerProperties {}
 
-export default class MapImageLayer extends Layer {
+export default class TileLayer extends Layer {
   constructor(properties: TileLayerProperties) {
     super(properties);
   }
