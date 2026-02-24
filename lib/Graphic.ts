@@ -1,16 +1,20 @@
 import type Layer from "./layers/Layer";
 import type Point from "./geometry/Point";
+import type Polyline from "./geometry/Polyline";
+import type Polygon from "./geometry/Polygon";
+
+export type Geometry = Point | Polyline | Polygon;
 
 export interface GraphicProperties {
   attributes?: Record<string, any>;
-  geometry: Point;
+  geometry: Geometry;
   layer?: Layer;
   symbol?: any;
 }
 
 export default class Graphic {
   public attributes: Record<string, any>;
-  public geometry: Point;
+  public geometry: Geometry;
   public layer?: Layer;
   public symbol: any;
 

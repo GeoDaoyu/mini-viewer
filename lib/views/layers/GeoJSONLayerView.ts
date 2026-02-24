@@ -26,28 +26,16 @@ export default class GeoJSONLayerView extends LayerView {
           : null);
       if (!symbol) continue;
 
-      const mapPoint = lngLatToXY(
-        graphic.geometry.longitude,
-        graphic.geometry.latitude,
-      );
-      const [screenX, screenY] = this.mapToScreen(mapPoint[0], mapPoint[1]);
+      if (graphic.geometry.type === 'point' && 'longitude' in graphic.geometry && 'latitude' in graphic.geometry) {
+        const mapPoint = lngLatToXY(
+          (graphic.geometry as any).longitude,
+          (graphic.geometry as any).latitude,
+        );
+        const [screenX, screenY] = this.mapToScreen(mapPoint[0], mapPoint[1]);
 
-      if (symbol.type === "simple-marker") {
-        this.renderMarker(ctx, screenX, screenY, symbol as SimpleMarkerSymbol);
-      } else if (symbol.type === "simple-line") {
-        this.renderMarker(
-          ctx,
-          screenX,
-          screenY,
-          new SimpleMarkerSymbol(symbol.color, "circle", symbol),
-        );
-      } else if (symbol.type === "simple-fill") {
-        this.renderMarker(
-          ctx,
-          screenX,
-          screenY,
-          new SimpleMarkerSymbol(symbol.color, "circle", symbol),
-        );
+        if (symbol.type === "simple-marker") {
+          this.renderMarker(ctx, screenX, screenY, symbol as SimpleMarkerSymbol);
+        }
       }
     }
   }
