@@ -2,21 +2,22 @@ import type Layer from "./layers/Layer";
 import type Point from "./geometry/Point";
 
 export interface GraphicProperties {
-  attributes?: Object;
+  attributes?: Record<string, any>;
   geometry: Point;
   layer?: Layer;
   symbol?: any;
 }
 
 export default class Graphic {
-  public attributes: Object;
+  public attributes: Record<string, any>;
   public geometry: Point;
-  public layer: Layer;
+  public layer?: Layer;
   public symbol: any;
 
   constructor(properties: GraphicProperties) {
     this.attributes = properties.attributes || {};
     this.geometry = properties.geometry;
+    this.layer = properties.layer;
     this.symbol = properties.symbol;
   }
 
@@ -26,9 +27,4 @@ export default class Graphic {
   setAttribute(name: string, newValue: any): void {
     this.attributes[name] = newValue;
   }
-
-  // TODO: missing method
-  // clone() {}
-  // fromJSON() {}
-  // toJSON() {}
 }

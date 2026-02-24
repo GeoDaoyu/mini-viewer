@@ -1,10 +1,8 @@
-import LayerView from './LayerView';
-import GeoJSONLayer from '../../layers/GeoJSONLayer';
-import { lngLatToXY } from '../../geometry/support/webMercatorUtils';
-import { SimpleMarkerSymbol } from '../../symbols/SimpleMarkerSymbol';
-import { SimpleLineSymbol } from '../../symbols/SimpleLineSymbol';
-import { SimpleFillSymbol } from '../../symbols/SimpleFillSymbol';
-import { Color } from '../../Color';
+import LayerView from "./LayerView";
+import GeoJSONLayer from "../../layers/GeoJSONLayer";
+import { lngLatToXY } from "../../geometry/support/webMercatorUtils";
+import { SimpleMarkerSymbol } from "../../symbols/SimpleMarkerSymbol";
+import { SimpleRenderer } from '../../renderers/SimpleRenderer';
 import MapView from "../MapView";
 
 export default class GeoJSONLayerView extends LayerView {
@@ -17,22 +15,39 @@ export default class GeoJSONLayerView extends LayerView {
 
   async render() {
     const { canvas } = this.view;
-    const ctx = canvas.getContext('2d');
+    const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
     for (const graphic of this.layer.source) {
-      const symbol = graphic.symbol || (this.layer.renderer ? this.layer.renderer.symbol : null);
+      const symbol =
+        graphic.symbol ||
+        (this.layer.renderer instanceof SimpleRenderer
+          ? this.layer.renderer.symbol
+          : null);
       if (!symbol) continue;
 
-      const mapPoint = lngLatToXY(graphic.geometry.longitude, graphic.geometry.latitude);
+      const mapPoint = lngLatToXY(
+        graphic.geometry.longitude,
+        graphic.geometry.latitude,
+      );
       const [screenX, screenY] = this.mapToScreen(mapPoint[0], mapPoint[1]);
 
-      if (symbol.type === 'simple-marker') {
+      if (symbol.type === "simple-marker") {
         this.renderMarker(ctx, screenX, screenY, symbol as SimpleMarkerSymbol);
-      } else if (symbol.type === 'simple-line') {
-        this.renderMarker(ctx, screenX, screenY, new SimpleMarkerSymbol(symbol.color, 'circle', symbol));
-      } else if (symbol.type === 'simple-fill') {
-        this.renderMarker(ctx, screenX, screenY, new SimpleMarkerSymbol(symbol.color, 'circle', symbol));
+      } else if (symbol.type === "simple-line") {
+        this.renderMarker(
+          ctx,
+          screenX,
+          screenY,
+          new SimpleMarkerSymbol(symbol.color, "circle", symbol),
+        );
+      } else if (symbol.type === "simple-fill") {
+        this.renderMarker(
+          ctx,
+          screenX,
+          screenY,
+          new SimpleMarkerSymbol(symbol.color, "circle", symbol),
+        );
       }
     }
   }
@@ -62,29 +77,34 @@ export default class GeoJSONLayerView extends LayerView {
     return [screenX, screenY];
   }
 
-  private renderMarker(ctx: CanvasRenderingContext2D, x: number, y: number, symbol: SimpleMarkerSymbol) {
+  private renderMarker(
+    ctx: CanvasRenderingContext2D,
+    x: number,
+    y: number,
+    symbol: SimpleMarkerSymbol,
+  ) {
     const size = parseInt(symbol.size) || 8;
     const radius = size / 2;
 
     ctx.fillStyle = `rgba(${symbol.color.r}, ${symbol.color.g}, ${symbol.color.b}, ${symbol.color.a})`;
 
-    if (symbol.style === 'circle') {
+    if (symbol.style === "circle") {
       ctx.beginPath();
       ctx.arc(x, y, radius, 0, 2 * Math.PI);
       ctx.fill();
-    } else if (symbol.style === 'square') {
+    } else if (symbol.style === "square") {
       ctx.fillRect(x - radius, y - radius, size, size);
     }
 
     if (symbol.outline) {
       ctx.strokeStyle = `rgba(${symbol.outline.color.r}, ${symbol.outline.color.g}, ${symbol.outline.color.b}, ${symbol.outline.color.a})`;
-      ctx.lineWidth = 1; 
+      ctx.lineWidth = 1;
 
-      if (symbol.style === 'circle') {
+      if (symbol.style === "circle") {
         ctx.beginPath();
         ctx.arc(x, y, radius, 0, 2 * Math.PI);
         ctx.stroke();
-      } else if (symbol.style === 'square') {
+      } else if (symbol.style === "square") {
         ctx.strokeRect(x - radius, y - radius, size, size);
       }
     }
