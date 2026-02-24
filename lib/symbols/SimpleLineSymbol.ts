@@ -1,7 +1,7 @@
 import { Color } from '../Color';
-import { Symbol } from './Symbol';
+import { LineSymbol } from './LineSymbol';
 
-export class SimpleLineSymbol extends Symbol {
+export class SimpleLineSymbol extends LineSymbol {
   style: string;
   width: number;
 
