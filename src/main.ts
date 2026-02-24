@@ -1,13 +1,13 @@
 import "./style.css";
-import MapView from "../lib/views/MapView";
-import Map from "../lib/Map";
-// import MapImageLayer from "../lib/layers/MapImageLayer";
-import TileLayer from "../lib/layers/TileLayer";
-import GeoJSONLayer from "../lib/layers/GeoJSONLayer";
-import Graphic from "../lib/Graphic";
-import Point from "../lib/geometry/Point";
-import { SimpleMarkerSymbol } from "../lib/symbols/SimpleMarkerSymbol";
-import { Color } from "../lib/Color";
+import MapView from "@/views/MapView";
+import Map from "@/Map";
+// import MapImageLayer from "@/layers/MapImageLayer";
+import TileLayer from "@/layers/TileLayer";
+import GeoJSONLayer from "@/layers/GeoJSONLayer";
+import Graphic from "@/Graphic";
+import Point from "@/geometry/Point";
+import { SimpleMarkerSymbol } from "@/symbols/SimpleMarkerSymbol";
+import { Color } from "@/Color";
 
 const map = new Map();
 const view = new MapView({
