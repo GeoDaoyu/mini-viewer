@@ -1,4 +1,4 @@
-import SpatialReference from "../../geometry/SpatialReference";
+import SpatialReference from "@/geometry/SpatialReference";
 import LOD from "./LOD";
 
 export default class TileInfo {

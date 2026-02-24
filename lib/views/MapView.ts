@@ -1,7 +1,7 @@
 import DOMContainer, { DOMContainerProperties } from "./DOMContainer";
-import TileInfo from "../layers/support/TileInfo";
-import Map from "../Map";
-import type Layer from "../layers/Layer";
+import TileInfo from "@/layers/support/TileInfo";
+import Map from "@/Map";
+import type Layer from "@/layers/Layer";
 import LayerView from "./layers/LayerView";
 import { reactiveUtils } from "@geodaoyu/accessor";
 

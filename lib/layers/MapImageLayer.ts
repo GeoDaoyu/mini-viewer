@@ -1,6 +1,6 @@
 import Layer, { LayerProperties } from "./Layer";
-import MapView from "../views/MapView";
-import MapImageLayerView from "../views/layers/MapImageLayerView";
+import MapView from "@/views/MapView";
+import MapImageLayerView from "@/views/layers/MapImageLayerView";
 
 export interface MapImageLayerProperties extends LayerProperties {}
 

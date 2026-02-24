@@ -1,8 +1,8 @@
 import Layer, { LayerProperties } from './Layer';
-import Graphic from '../Graphic';
-import { Renderer } from '../renderers/Renderer';
-import MapView from '../views/MapView';
-import GeoJSONLayerView from '../views/layers/GeoJSONLayerView';
+import Graphic from '@/Graphic';
+import { Renderer } from '@/renderers/Renderer';
+import MapView from '@/views/MapView';
+import GeoJSONLayerView from '@/views/layers/GeoJSONLayerView';
 
 export interface GeoJSONLayerProperties extends LayerProperties {
   source?: Graphic[];

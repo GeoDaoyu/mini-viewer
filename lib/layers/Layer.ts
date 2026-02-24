@@ -1,5 +1,5 @@
-import MapView from "../views/MapView";
-import LayerView from "../views/layers/LayerView";
+import MapView from "@/views/MapView";
+import LayerView from "@/views/layers/LayerView";
 
 export interface LayerProperties {
   url: string;
