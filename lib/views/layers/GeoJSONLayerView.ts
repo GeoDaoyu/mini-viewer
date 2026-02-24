@@ -15,12 +15,10 @@ export default class GeoJSONLayerView extends LayerView {
     this.layer = properties.layer;
   }
 
-  render() {
+  async render() {
     const { canvas } = this.view;
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
-
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     for (const graphic of this.layer.source) {
       const symbol = graphic.symbol || (this.layer.renderer ? this.layer.renderer.symbol : null);

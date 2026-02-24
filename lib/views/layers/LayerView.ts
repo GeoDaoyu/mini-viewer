@@ -13,5 +13,5 @@ export default class LayerView {
     this.layer = properties.layer;
     this.view = properties.view;
   }
-  render() {}
+  async render() {}
 }
