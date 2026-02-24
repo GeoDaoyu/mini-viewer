@@ -3,7 +3,7 @@ import MapView from "@/views/MapView";
 import Map from "@/Map";
 // import MapImageLayer from "@/layers/MapImageLayer";
 import TileLayer from "@/layers/TileLayer";
-import GeoJSONLayer from "@/layers/GeoJSONLayer";
+import GraphicsLayer from "@/layers/GraphicsLayer";
 import Graphic from "@/Graphic";
 import Point from "@/geometry/Point";
 import { SimpleMarkerSymbol } from "@/symbols/SimpleMarkerSymbol";
@@ -30,7 +30,7 @@ const tileLayer = new TileLayer({
 });
 view.map.add(tileLayer);
 
-// 创建包含点 [120, 30] 的 GeoJSON 图层
+// 创建包含点 [120, 30] 的 GraphicsLayer
 const pointGeometry = new Point({ longitude: 120, latitude: 30 });
 const markerSymbol = new SimpleMarkerSymbol(new Color([255, 0, 0, 1]), 'circle');
 const pointGraphic = new Graphic({
@@ -38,10 +38,10 @@ const pointGraphic = new Graphic({
   symbol: markerSymbol,
 });
 
-const geoJSONLayer = new GeoJSONLayer({
+const graphicsLayer = new GraphicsLayer({
   url: '',
-  id: 'GeoJSON',
-  source: [pointGraphic]
+  id: 'Graphics',
+  graphics: [pointGraphic]
 });
 
-view.map.add(geoJSONLayer);
+view.map.add(graphicsLayer);
