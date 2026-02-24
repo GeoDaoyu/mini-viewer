@@ -1,5 +1,5 @@
 import MapView from "../views/MapView";
-import MapImageLayerView from "../views/layers/MapImageLayerView";
+import LayerView from "../views/layers/LayerView";
 
 export interface LayerProperties {
   url: string;
@@ -7,8 +7,8 @@ export interface LayerProperties {
   title?: string;
 }
 
-export default class MapImageLayer {
-  url: string;
+export default class Layer {
+  url?: string;
   id: string;
   title?: string;
 
@@ -17,7 +17,7 @@ export default class MapImageLayer {
     this.id = properties.id;
     this.title = properties.title;
   }
-  createLayerView(view: MapView): MapImageLayerView {
-    return new MapImageLayerView({ view, layer: this });
+  createLayerView(view: MapView): LayerView {
+    return new LayerView({ view, layer: this });
   }
 }

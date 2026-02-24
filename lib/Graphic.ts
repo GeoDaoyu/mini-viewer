@@ -6,7 +6,6 @@ export interface GraphicProperties {
   geometry: Point;
   layer?: Layer;
   symbol?: any;
-  visible?: boolean;
 }
 
 export default class Graphic {
@@ -14,11 +13,11 @@ export default class Graphic {
   public geometry: Point;
   public layer: Layer;
   public symbol: any;
-  public visible: boolean;
 
   constructor(properties: GraphicProperties) {
     this.attributes = properties.attributes || {};
     this.geometry = properties.geometry;
+    this.symbol = properties.symbol;
   }
 
   getAttribute(name: string): any {
