@@ -7,3 +7,52 @@ body, html {
   height: 100vh;
   width: 100vw;
 }
+
+#layer-panel {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  min-width: 150px;
+}
+
+#layer-panel h3 {
+  margin: 0 0 10px 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+}
+
+.layer-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.layer-item:last-child {
+  margin-bottom: 0;
+}
+
+.layer-item input[type="checkbox"] {
+  margin-right: 8px;
+  cursor: pointer;
+}
+
+.layer-item label {
+  cursor: pointer;
+  font-size: 13px;
+  color: #444;
+}
+
+.layer-item input[type="checkbox"]:disabled {
+  cursor: not-allowed;
+}
+
+.layer-item input[type="checkbox"]:disabled + label {
+  color: #888;
+  cursor: not-allowed;
+}
