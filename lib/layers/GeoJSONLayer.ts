@@ -1,4 +1,4 @@
-import Layer, { LayerProperties } from './Layer';
+import Layer, { LayerProperties, LayerType } from './Layer';
 import Graphic from '@/Graphic';
 import { Renderer } from '@/renderers/Renderer';
 import MapView from '@/views/MapView';
@@ -10,6 +10,7 @@ export interface GeoJSONLayerProperties extends LayerProperties {
 }
 
 export default class GeoJSONLayer extends Layer {
+  readonly type: LayerType = "geojson";
   source: Graphic[];
   renderer?: Renderer;
 

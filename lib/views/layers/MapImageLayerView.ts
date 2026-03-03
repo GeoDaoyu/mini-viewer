@@ -1,7 +1,8 @@
 import LayerView from "./LayerView";
+import MapImageLayer from "../../layers/MapImageLayer";
 import { lngLatToXY } from "../../geometry/support/webMercatorUtils";
 
-export default class MapImageLayerView extends LayerView {
+export default class MapImageLayerView extends LayerView<MapImageLayer> {
   async render() {
     try {
       const bbox = this.getBBox();

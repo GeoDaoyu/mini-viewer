@@ -1,7 +1,8 @@
 import LayerView from "./LayerView";
+import TileLayer from "../../layers/TileLayer";
 import { lngLatToXY } from "../../geometry/support/webMercatorUtils";
 
-export default class TileLayerView extends LayerView {
+export default class TileLayerView extends LayerView<TileLayer> {
   async render() {
     try {
       const { canvas, zoom } = this.view;

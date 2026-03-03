@@ -1,4 +1,4 @@
-import Layer, { LayerProperties } from './Layer';
+import Layer, { LayerProperties, LayerType } from './Layer';
 import Graphic from '@/Graphic';
 import MapView from '@/views/MapView';
 import GraphicsLayerView from '@/views/layers/GraphicsLayerView';
@@ -8,6 +8,7 @@ export interface GraphicsLayerProperties extends LayerProperties {
 }
 
 export default class GraphicsLayer extends Layer {
+  readonly type: LayerType = "graphics";
   graphics: Graphic[];
 
   constructor(properties: GraphicsLayerProperties) {

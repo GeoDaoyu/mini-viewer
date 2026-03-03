@@ -1,4 +1,4 @@
-import Layer, { LayerProperties } from "./Layer";
+import Layer, { LayerProperties, LayerType } from "./Layer";
 import MapView from "@/views/MapView";
 import TileLayerView from "@/views/layers/TileLayerView";
 
@@ -7,6 +7,7 @@ export interface TileLayerProperties extends LayerProperties {
 }
 
 export default class TileLayer extends Layer {
+  readonly type: LayerType = "tile";
   url: string;
 
   constructor(properties: TileLayerProperties) {

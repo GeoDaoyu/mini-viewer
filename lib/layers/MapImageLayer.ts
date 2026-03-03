@@ -1,4 +1,4 @@
-import Layer, { LayerProperties } from "./Layer";
+import Layer, { LayerProperties, LayerType } from "./Layer";
 import MapView from "@/views/MapView";
 import MapImageLayerView from "@/views/layers/MapImageLayerView";
 
@@ -7,6 +7,7 @@ export interface MapImageLayerProperties extends LayerProperties {
 }
 
 export default class MapImageLayer extends Layer {
+  readonly type: LayerType = "map-image";
   url: string;
 
   constructor(properties: MapImageLayerProperties) {

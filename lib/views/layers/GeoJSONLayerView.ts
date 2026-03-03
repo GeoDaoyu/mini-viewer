@@ -5,12 +5,9 @@ import { SimpleMarkerSymbol } from "../../symbols/SimpleMarkerSymbol";
 import { SimpleRenderer } from '../../renderers/SimpleRenderer';
 import MapView from "../MapView";
 
-export default class GeoJSONLayerView extends LayerView {
-  layer: GeoJSONLayer;
-
+export default class GeoJSONLayerView extends LayerView<GeoJSONLayer> {
   constructor(properties: { view: MapView; layer: GeoJSONLayer }) {
     super(properties);
-    this.layer = properties.layer;
   }
 
   async render() {

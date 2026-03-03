@@ -6,12 +6,9 @@ import { SimpleLineSymbol } from "@/symbols/SimpleLineSymbol";
 import { SimpleFillSymbol } from "@/symbols/SimpleFillSymbol";
 import MapView from "../MapView";
 
-export default class GraphicsLayerView extends LayerView {
-  layer: GraphicsLayer;
-
+export default class GraphicsLayerView extends LayerView<GraphicsLayer> {
   constructor(properties: { view: MapView; layer: GraphicsLayer }) {
     super(properties);
-    this.layer = properties.layer;
   }
 
   async render() {
