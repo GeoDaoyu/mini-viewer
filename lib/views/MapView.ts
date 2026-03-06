@@ -79,10 +79,37 @@ export default class MapView extends DOMContainer {
     const metersPerDegreeLng = 111320 * Math.cos((Math.PI / 180) * centerLat);
 
     const lng = centerLng + (offsetX * resolution) / metersPerDegreeLng;
-    const lat = centerLat - (offsetY * resolution) / metersPerDegreeLat; // Y轴反向
+    const lat = centerLat - (offsetY * resolution) / metersPerDegreeLat; // Y 轴反向
 
     return [lng, lat];
   }
+
+  toScreen(lng: number, lat: number): [number, number] {
+    const { canvas, tileInfo, zoom, center } = this;
+
+    const currentLOD = tileInfo.lods.find((lod) => lod.level === zoom);
+    if (!currentLOD) {
+      throw new Error(`No LOD found for zoom level ${zoom}`);
+    }
+
+    const [centerLng, centerLat] = center;
+    const metersPerDegreeLat = 111320;
+    const metersPerDegreeLng = 111320 * Math.cos((Math.PI / 180) * centerLat);
+
+    const resolution = currentLOD.resolution;
+
+    const canvasCenterX = canvas.width / 2;
+    const canvasCenterY = canvas.height / 2;
+
+    const offsetX = ((lng - centerLng) * metersPerDegreeLng) / resolution;
+    const offsetY = ((lat - centerLat) * metersPerDegreeLat) / resolution;
+
+    const screenX = canvasCenterX + offsetX;
+    const screenY = canvasCenterY - offsetY; // Y 轴翻转
+
+    return [screenX, screenY];
+  }
+
   protected handleWheel(event: WheelEvent): void {
     event.preventDefault();
 

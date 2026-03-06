@@ -1,6 +1,5 @@
 import LayerView from "./LayerView";
 import GraphicsLayer from "@/layers/GraphicsLayer";
-import { lngLatToXY } from "@/geometry/support/webMercatorUtils";
 import { SimpleMarkerSymbol } from "@/symbols/SimpleMarkerSymbol";
 import { SimpleLineSymbol } from "@/symbols/SimpleLineSymbol";
 import { SimpleFillSymbol } from "@/symbols/SimpleFillSymbol";
@@ -27,11 +26,10 @@ export default class GraphicsLayerView extends LayerView<GraphicsLayer> {
         "point",
         (graphic, symbol) => {
           if (!("longitude" in graphic.geometry)) return;
-          const mapPoint = lngLatToXY(
+          const [screenX, screenY] = this.view.toScreen(
             graphic.geometry.longitude,
             graphic.geometry.latitude,
           );
-          const [screenX, screenY] = this.mapToScreen(mapPoint[0], mapPoint[1]);
           this.renderMarker(ctx, screenX, screenY, symbol);
         },
       ],
@@ -61,31 +59,6 @@ export default class GraphicsLayerView extends LayerView<GraphicsLayer> {
       .forEach(({ graphic, symbol }) => {
         renderers.get(graphic.geometry.type)?.(graphic, symbol);
       });
-  }
-
-  private mapToScreen(mapX: number, mapY: number): [number, number] {
-    const { canvas, tileInfo, zoom, center } = this.view;
-
-    const currentLOD = tileInfo.lods.find((lod) => lod.level === zoom);
-    if (!currentLOD) {
-      throw new Error(`No LOD found for zoom level ${zoom}`);
-    }
-
-    const [centerLng, centerLat] = center;
-    const [centerMapX, centerMapY] = lngLatToXY(centerLng, centerLat);
-
-    const resolution = currentLOD.resolution;
-
-    const canvasCenterX = canvas.width / 2;
-    const canvasCenterY = canvas.height / 2;
-
-    const offsetX = (mapX - centerMapX) / resolution;
-    const offsetY = (mapY - centerMapY) / resolution;
-
-    const screenX = canvasCenterX + offsetX;
-    const screenY = canvasCenterY - offsetY; // Y轴翻转
-
-    return [screenX, screenY];
   }
 
   private renderMarker(
@@ -132,14 +105,12 @@ export default class GraphicsLayerView extends LayerView<GraphicsLayer> {
       if (path.length === 0) continue;
 
       const [firstLng, firstLat] = path[0];
-      const [firstX, firstY] = this.mapToScreen(
-        ...lngLatToXY(firstLng, firstLat),
-      );
+      const [firstX, firstY] = this.view.toScreen(firstLng, firstLat);
       ctx.moveTo(firstX, firstY);
 
       for (let i = 1; i < path.length; i++) {
         const [lng, lat] = path[i];
-        const [x, y] = this.mapToScreen(...lngLatToXY(lng, lat));
+        const [x, y] = this.view.toScreen(lng, lat);
         ctx.lineTo(x, y);
       }
     }
@@ -160,14 +131,12 @@ export default class GraphicsLayerView extends LayerView<GraphicsLayer> {
       if (ring.length === 0) continue;
 
       const [firstLng, firstLat] = ring[0];
-      const [firstX, firstY] = this.mapToScreen(
-        ...lngLatToXY(firstLng, firstLat),
-      );
+      const [firstX, firstY] = this.view.toScreen(firstLng, firstLat);
       ctx.moveTo(firstX, firstY);
 
       for (let i = 1; i < ring.length; i++) {
         const [lng, lat] = ring[i];
-        const [x, y] = this.mapToScreen(...lngLatToXY(lng, lat));
+        const [x, y] = this.view.toScreen(lng, lat);
         ctx.lineTo(x, y);
       }
 
