@@ -16,49 +16,51 @@ export default class GraphicsLayerView extends LayerView<GraphicsLayer> {
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
-    for (const graphic of this.layer.graphics) {
-      const symbol = graphic.symbol;
-      if (!symbol) continue;
+    const defaultSymbols = new Map<string, () => any>([
+      ["point", () => new SimpleMarkerSymbol()],
+      ["polyline", () => new SimpleLineSymbol()],
+      ["polygon", () => new SimpleFillSymbol()],
+    ]);
 
-      if (
-        graphic.geometry.type === "point" &&
-        "longitude" in graphic.geometry &&
-        "latitude" in graphic.geometry
-      ) {
-        const mapPoint = lngLatToXY(
-          (graphic.geometry as any).longitude,
-          (graphic.geometry as any).latitude,
-        );
-        const [screenX, screenY] = this.mapToScreen(mapPoint[0], mapPoint[1]);
-
-        if (symbol.type === "simple-marker") {
-          this.renderMarker(
-            ctx,
-            screenX,
-            screenY,
-            symbol as SimpleMarkerSymbol,
+    const renderers = new Map<string, (graphic: any, symbol: any) => void>([
+      [
+        "point",
+        (graphic, symbol) => {
+          if (!("longitude" in graphic.geometry)) return;
+          const mapPoint = lngLatToXY(
+            graphic.geometry.longitude,
+            graphic.geometry.latitude,
           );
-        }
-      } else if (
-        graphic.geometry.type === "polyline" &&
-        "paths" in graphic.geometry
-      ) {
-        this.renderPolyline(
-          ctx,
-          (graphic.geometry as any).paths,
-          symbol as SimpleLineSymbol,
-        );
-      } else if (
-        graphic.geometry.type === "polygon" &&
-        "rings" in graphic.geometry
-      ) {
-        this.renderPolygon(
-          ctx,
-          (graphic.geometry as any).rings,
-          symbol as SimpleFillSymbol,
-        );
-      }
-    }
+          const [screenX, screenY] = this.mapToScreen(mapPoint[0], mapPoint[1]);
+          this.renderMarker(ctx, screenX, screenY, symbol);
+        },
+      ],
+      [
+        "polyline",
+        (graphic, symbol) => {
+          if (!("paths" in graphic.geometry)) return;
+          this.renderPolyline(ctx, graphic.geometry.paths, symbol);
+        },
+      ],
+      [
+        "polygon",
+        (graphic, symbol) => {
+          if (!("rings" in graphic.geometry)) return;
+          this.renderPolygon(ctx, graphic.geometry.rings, symbol);
+        },
+      ],
+    ]);
+
+    this.layer.graphics
+      .map((graphic) => ({
+        graphic,
+        symbol:
+          graphic.symbol ?? defaultSymbols.get(graphic.geometry.type)?.(),
+      }))
+      .filter(({ symbol }) => symbol)
+      .forEach(({ graphic, symbol }) => {
+        renderers.get(graphic.geometry.type)?.(graphic, symbol);
+      });
   }
 
   private mapToScreen(mapX: number, mapY: number): [number, number] {
