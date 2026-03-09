@@ -3,6 +3,7 @@ import Map from "@/Map";
 import MapImageLayer from "@/layers/MapImageLayer";
 import TileLayer from "@/layers/TileLayer";
 import GraphicsLayer from "@/layers/GraphicsLayer";
+import FeatureLayer from "@/layers/FeatureLayer";
 import Graphic from "@/Graphic";
 import Point from "@/geometry/Point";
 import Polyline from "@/geometry/Polyline";
@@ -84,11 +85,56 @@ const mapImageLayer = new MapImageLayer({
   url: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/WorldTimeZones/MapServer",
 });
 
+const polygon1 = new Polygon({
+  rings: [
+    [
+      [115, 25],
+      [125, 25],
+      [125, 35],
+      [115, 35],
+      [115, 25],
+    ],
+  ],
+});
+const polygon2 = new Polygon({
+  rings: [
+    [
+      [100, 20],
+      [110, 20],
+      [110, 30],
+      [100, 30],
+      [100, 20],
+    ],
+  ],
+});
+const featureFillSymbol = new SimpleFillSymbol(
+  new Color([255, 165, 0, 0.6]),
+  "solid",
+  new SimpleLineSymbol(new Color([255, 140, 0, 1]), 2),
+);
+const featureGraphic1 = new Graphic({
+  geometry: polygon1,
+  symbol: featureFillSymbol,
+});
+const featureGraphic2 = new Graphic({
+  geometry: polygon2,
+  symbol: featureFillSymbol,
+});
+
+const featureLayer = new FeatureLayer({
+  id: "Feature",
+  title: "Feature Layer",
+  source: [featureGraphic1, featureGraphic2],
+});
+
 const graphicsLayerCheckbox = document.getElementById(
   "graphics-layer",
 ) as HTMLInputElement;
 const mapImageLayerCheckbox = document.getElementById(
   "mapimage-layer",
+) as HTMLInputElement;
+const featureLayerCheckbox = document.getElementById(
+  "feature-layer",
 ) as HTMLInputElement;
 
 graphicsLayerCheckbox?.addEventListener("change", (e) => {
@@ -113,6 +159,20 @@ mapImageLayerCheckbox?.addEventListener("change", (e) => {
     }
   } else {
     const layer = view.map.findLayerById("World_Street_Map");
+    if (layer) {
+      view.map.remove(layer);
+    }
+  }
+});
+
+featureLayerCheckbox?.addEventListener("change", (e) => {
+  const checked = (e.target as HTMLInputElement).checked;
+  if (checked) {
+    if (!view.map.findLayerById("Feature")) {
+      view.map.add(featureLayer);
+    }
+  } else {
+    const layer = view.map.findLayerById("Feature");
     if (layer) {
       view.map.remove(layer);
     }

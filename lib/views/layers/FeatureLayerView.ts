@@ -1,0 +1,164 @@
+import LayerView from "./LayerView";
+import FeatureLayer from "@/layers/FeatureLayer";
+import { SimpleRenderer } from "@/renderers/SimpleRenderer";
+import { SimpleMarkerSymbol } from "@/symbols/SimpleMarkerSymbol";
+import { SimpleLineSymbol } from "@/symbols/SimpleLineSymbol";
+import { SimpleFillSymbol } from "@/symbols/SimpleFillSymbol";
+import MapView from "../MapView";
+
+export default class FeatureLayerView extends LayerView<FeatureLayer> {
+  private defaultSymbols = new Map<string, () => any>([
+    ["point", () => new SimpleMarkerSymbol()],
+    ["polyline", () => new SimpleLineSymbol()],
+    ["polygon", () => new SimpleFillSymbol()],
+  ]);
+
+  constructor(properties: { view: MapView; layer: FeatureLayer }) {
+    super(properties);
+  }
+
+  async render() {
+    const { canvas } = this.view;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    const renderers = new Map<string, (graphic: any, symbol: any) => void>([
+      [
+        "point",
+        (graphic, symbol) => {
+          if (!("longitude" in graphic.geometry)) return;
+          const [screenX, screenY] = this.view.toScreen(
+            graphic.geometry.longitude,
+            graphic.geometry.latitude,
+          );
+          this.renderMarker(ctx, screenX, screenY, symbol);
+        },
+      ],
+      [
+        "polyline",
+        (graphic, symbol) => {
+          if (!("paths" in graphic.geometry)) return;
+          this.renderPolyline(ctx, graphic.geometry.paths, symbol);
+        },
+      ],
+      [
+        "polygon",
+        (graphic, symbol) => {
+          if (!("rings" in graphic.geometry)) return;
+          this.renderPolygon(ctx, graphic.geometry.rings, symbol);
+        },
+      ],
+    ]);
+
+    this.layer.source
+      .map((graphic) => {
+        const symbol = this.getSymbol(graphic);
+        return { graphic, symbol };
+      })
+      .filter(({ symbol }) => symbol)
+      .forEach(({ graphic, symbol }) => {
+        renderers.get(graphic.geometry.type)?.(graphic, symbol);
+      });
+  }
+
+  private getSymbol(graphic: any) {
+    if (this.layer.renderer instanceof SimpleRenderer) {
+      return this.layer.renderer.symbol;
+    }
+    return graphic.symbol ?? this.defaultSymbols.get(graphic.geometry.type)?.();
+  }
+
+  private renderMarker(
+    ctx: CanvasRenderingContext2D,
+    x: number,
+    y: number,
+    symbol: SimpleMarkerSymbol,
+  ) {
+    const size = parseInt(symbol.size) || 8;
+    const radius = size / 2;
+
+    ctx.fillStyle = `rgba(${symbol.color.r}, ${symbol.color.g}, ${symbol.color.b}, ${symbol.color.a})`;
+
+    if (symbol.style === "circle") {
+      ctx.beginPath();
+      ctx.arc(x, y, radius, 0, 2 * Math.PI);
+      ctx.fill();
+    } else if (symbol.style === "square") {
+      ctx.fillRect(x - radius, y - radius, size, size);
+    }
+
+    if (symbol.outline) {
+      ctx.strokeStyle = `rgba(${symbol.outline.color.r}, ${symbol.outline.color.g}, ${symbol.outline.color.b}, ${symbol.outline.color.a})`;
+      ctx.lineWidth = 1;
+
+      if (symbol.style === "circle") {
+        ctx.beginPath();
+        ctx.arc(x, y, radius, 0, 2 * Math.PI);
+        ctx.stroke();
+      } else if (symbol.style === "square") {
+        ctx.strokeRect(x - radius, y - radius, size, size);
+      }
+    }
+  }
+
+  private renderPolyline(
+    ctx: CanvasRenderingContext2D,
+    paths: number[][][],
+    symbol: SimpleLineSymbol,
+  ) {
+    ctx.beginPath();
+
+    for (const path of paths) {
+      if (path.length === 0) continue;
+
+      const [firstLng, firstLat] = path[0];
+      const [firstX, firstY] = this.view.toScreen(firstLng, firstLat);
+      ctx.moveTo(firstX, firstY);
+
+      for (let i = 1; i < path.length; i++) {
+        const [lng, lat] = path[i];
+        const [x, y] = this.view.toScreen(lng, lat);
+        ctx.lineTo(x, y);
+      }
+    }
+
+    ctx.strokeStyle = `rgba(${symbol.color.r}, ${symbol.color.g}, ${symbol.color.b}, ${symbol.color.a})`;
+    ctx.lineWidth = symbol.width || 1;
+    ctx.stroke();
+  }
+
+  private renderPolygon(
+    ctx: CanvasRenderingContext2D,
+    rings: number[][][],
+    symbol: SimpleFillSymbol,
+  ) {
+    ctx.beginPath();
+
+    for (const ring of rings) {
+      if (ring.length === 0) continue;
+
+      const [firstLng, firstLat] = ring[0];
+      const [firstX, firstY] = this.view.toScreen(firstLng, firstLat);
+      ctx.moveTo(firstX, firstY);
+
+      for (let i = 1; i < ring.length; i++) {
+        const [lng, lat] = ring[i];
+        const [x, y] = this.view.toScreen(lng, lat);
+        ctx.lineTo(x, y);
+      }
+
+      ctx.closePath();
+    }
+
+    if (symbol.color) {
+      ctx.fillStyle = `rgba(${symbol.color.r}, ${symbol.color.g}, ${symbol.color.b}, ${symbol.color.a})`;
+      ctx.fill();
+    }
+
+    if (symbol.outline) {
+      ctx.strokeStyle = `rgba(${symbol.outline.color.r}, ${symbol.outline.color.g}, ${symbol.outline.color.b}, ${symbol.outline.color.a})`;
+      ctx.lineWidth = symbol.outline.width || 1;
+      ctx.stroke();
+    }
+  }
+}
