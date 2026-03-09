@@ -11,6 +11,9 @@ importers:
       '@geodaoyu/accessor':
         specifier: ^3.0.2
         version: 3.0.2
+      '@terraformer/arcgis':
+        specifier: ^2.1.2
+        version: 2.1.2
     devDependencies:
       typescript:
         specifier: ~5.9.2
@@ -280,6 +283,12 @@ packages:
     cpu: [x64]
     os: [win32]
 
+  '@terraformer/arcgis@2.1.2':
+    resolution: {integrity: sha512-IvdfqehcNAUtKU1OFMKwPT8EvdKlVFZ7q7ZKzkIF8XzYZIVsZLuXuOS1UBdRh5u/o+X5Gax7jiZhD8U/4TV+Jw==}
+
+  '@terraformer/common@2.1.2':
+    resolution: {integrity: sha512-cwPdTFzIpekZhZRrgDEkqLKNPoqbyCBQHiemaovnGIeUx0Pl336MY/eCxzJ5zXkrQLVo9zPalq/vYW5HnyKevQ==}
+
   '@types/estree@1.0.8':
     resolution: {integrity: sha512-dWHzHa2WqEXI/O1E9OjrocMTKJl2mSrEolh1Iomrv6U+JuNwaHXsXx9bLu5gG7BUWFIN0skIQJQ/L1rIex4X6w==}
 
@@ -525,6 +534,12 @@ snapshots:
 
   '@rollup/rollup-win32-x64-msvc@4.46.2':
     optional: true
+
+  '@terraformer/arcgis@2.1.2':
+    dependencies:
+      '@terraformer/common': 2.1.2
+
+  '@terraformer/common@2.1.2': {}
 
   '@types/estree@1.0.8': {}
 
