@@ -4,6 +4,7 @@ import MapImageLayer from "@/layers/MapImageLayer";
 import TileLayer from "@/layers/TileLayer";
 import GraphicsLayer from "@/layers/GraphicsLayer";
 import FeatureLayer from "@/layers/FeatureLayer";
+import GeoJSONLayer from "@/layers/GeoJSONLayer";
 import Graphic from "@/Graphic";
 import Point from "@/geometry/Point";
 import Polyline from "@/geometry/Polyline";
@@ -127,6 +128,12 @@ const featureLayer = new FeatureLayer({
   source: [featureGraphic1, featureGraphic2],
 });
 
+const geojsonLayer = new GeoJSONLayer({
+  id: "GeoJSON",
+  title: "GeoJSON Layer",
+  url: "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.geojson",
+});
+
 const graphicsLayerCheckbox = document.getElementById(
   "graphics-layer",
 ) as HTMLInputElement;
@@ -135,6 +142,9 @@ const mapImageLayerCheckbox = document.getElementById(
 ) as HTMLInputElement;
 const featureLayerCheckbox = document.getElementById(
   "feature-layer",
+) as HTMLInputElement;
+const geojsonLayerCheckbox = document.getElementById(
+  "geojson-layer",
 ) as HTMLInputElement;
 
 graphicsLayerCheckbox?.addEventListener("change", (e) => {
@@ -175,6 +185,20 @@ featureLayerCheckbox?.addEventListener("change", (e) => {
     const layer = view.map.findLayerById("Feature");
     if (layer) {
       view.map.remove(layer);
+    }
+  }
+});
+geojsonLayerCheckbox?.addEventListener("change", (e) => {
+  const checked = (e.target as HTMLInputElement).checked;
+  debugger;
+  if (checked) {
+    if (!view.map.findLayerById("GeoJSON")) {
+      view.map.add(geojsonLayer);
+    }
+  } else {
+    const layer = view.map.findLayerById("GeoJSON");
+    if (layer) {
+      view.map.remove(geojsonLayer);
     }
   }
 });
