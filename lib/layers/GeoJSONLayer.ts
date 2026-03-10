@@ -7,7 +7,6 @@ import { geojsonToArcGIS } from '@terraformer/arcgis';
 import Point from '@/geometry/Point';
 import Polyline from '@/geometry/Polyline';
 import Polygon from '@/geometry/Polygon';
-import { xyToLngLat } from '@/geometry/support/webMercatorUtils';
 
 export interface GeoJSONLayerProperties extends LayerProperties {
   url?: string;
@@ -65,28 +64,18 @@ export default class GeoJSONLayer extends Layer {
 
   private createGeometry(arcgisGeometry: any) {
     if (arcgisGeometry.x !== undefined && arcgisGeometry.y !== undefined) {
-      const [lng, lat] = xyToLngLat(arcgisGeometry.x, arcgisGeometry.y);
-      return new Point({ longitude: lng, latitude: lat });
+      return new Point({ longitude: arcgisGeometry.x, latitude: arcgisGeometry.y });
     }
 
     if (arcgisGeometry.paths) {
-      return new Polyline({ paths: this.convertPaths(arcgisGeometry.paths) });
+      return new Polyline({ paths: arcgisGeometry.paths });
     }
 
     if (arcgisGeometry.rings) {
-      return new Polygon({ rings: this.convertPaths(arcgisGeometry.rings) });
+      return new Polygon({ rings: arcgisGeometry.rings });
     }
 
     throw new Error('Unsupported geometry type');
-  }
-
-  private convertPaths(paths: number[][][]): number[][][] {
-    return paths.map(path => 
-      path.map(point => {
-        const [lng, lat] = xyToLngLat(point[0], point[1]);
-        return [lng, lat];
-      })
-    );
   }
 
   createLayerView(view: MapView): GeoJSONLayerView {

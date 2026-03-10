@@ -4,6 +4,7 @@ import Map from "@/Map";
 import type Layer from "@/layers/Layer";
 import LayerView from "./layers/LayerView";
 import { reactiveUtils } from "@geodaoyu/accessor";
+import { lngLatToXY, xyToLngLat } from "@/geometry/support/webMercatorUtils";
 
 interface MapViewProperties extends DOMContainerProperties {
   zoom?: number;
@@ -66,20 +67,19 @@ export default class MapView extends DOMContainer {
     const mouseX = event.clientX - rect.left;
     const mouseY = event.clientY - rect.top;
 
-    const canvasCenterX = rect.width / 2;
-    const canvasCenterY = rect.height / 2;
+    const canvasCenterX = canvas.width / 2;
+    const canvasCenterY = canvas.height / 2;
 
     const offsetX = mouseX - canvasCenterX;
     const offsetY = mouseY - canvasCenterY;
 
     const resolution = currentLOD.resolution;
-    const [centerLng, centerLat] = center;
 
-    const metersPerDegreeLat = 111320;
-    const metersPerDegreeLng = 111320 * Math.cos((Math.PI / 180) * centerLat);
+    const [centerX, centerY] = lngLatToXY(center[0], center[1]);
+    const pointX = centerX + offsetX * resolution;
+    const pointY = centerY - offsetY * resolution;
 
-    const lng = centerLng + (offsetX * resolution) / metersPerDegreeLng;
-    const lat = centerLat - (offsetY * resolution) / metersPerDegreeLat; // Y 轴反向
+    const [lng, lat] = xyToLngLat(pointX, pointY);
 
     return [lng, lat];
   }
@@ -93,19 +93,19 @@ export default class MapView extends DOMContainer {
     }
 
     const [centerLng, centerLat] = center;
-    const metersPerDegreeLat = 111320;
-    const metersPerDegreeLng = 111320 * Math.cos((Math.PI / 180) * centerLat);
+    const [centerX, centerY] = lngLatToXY(centerLng, centerLat);
+    const [pointX, pointY] = lngLatToXY(lng, lat);
 
     const resolution = currentLOD.resolution;
 
     const canvasCenterX = canvas.width / 2;
     const canvasCenterY = canvas.height / 2;
 
-    const offsetX = ((lng - centerLng) * metersPerDegreeLng) / resolution;
-    const offsetY = ((lat - centerLat) * metersPerDegreeLat) / resolution;
+    const offsetX = (pointX - centerX) / resolution;
+    const offsetY = (centerY - pointY) / resolution;
 
     const screenX = canvasCenterX + offsetX;
-    const screenY = canvasCenterY - offsetY; // Y 轴翻转
+    const screenY = canvasCenterY + offsetY;
 
     return [screenX, screenY];
   }

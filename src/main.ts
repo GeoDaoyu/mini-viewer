@@ -190,7 +190,6 @@ featureLayerCheckbox?.addEventListener("change", (e) => {
 });
 geojsonLayerCheckbox?.addEventListener("change", (e) => {
   const checked = (e.target as HTMLInputElement).checked;
-  debugger;
   if (checked) {
     if (!view.map.findLayerById("GeoJSON")) {
       view.map.add(geojsonLayer);
