@@ -14,7 +14,7 @@
 - **GraphicsLayer** - 客户端图形图层
 - **FeatureLayer** - 客户端要素图层
 
-## Development
+## 开发
 
 ```bash
 # install dependencies
@@ -26,4 +26,8 @@ $ pnpm start
 # build library source code
 $ pnpm run build
 ```
+
+## AI 协助
+
+本仓库由 [Qwen](https://tongyi.aliyun.com/) AI 协助开发。
 
