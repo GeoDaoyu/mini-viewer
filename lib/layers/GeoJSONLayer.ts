@@ -1,39 +1,30 @@
-import Layer, { LayerProperties, LayerType } from './Layer';
-import Graphic from '@/Graphic';
-import { Renderer } from '@/renderers/Renderer';
-import MapView from '@/views/MapView';
-import GeoJSONLayerView from '@/views/layers/GeoJSONLayerView';
-import { geojsonToArcGIS } from '@terraformer/arcgis';
-import Point from '@/geometry/Point';
-import Polyline from '@/geometry/Polyline';
-import Polygon from '@/geometry/Polygon';
+import Layer, { LayerProperties, LayerType } from "./Layer";
+import Graphic from "@/Graphic";
+import { Renderer } from "@/renderers/Renderer";
+import MapView from "@/views/MapView";
+import GeoJSONLayerView from "@/views/layers/GeoJSONLayerView";
+import { geojsonToArcGIS } from "@terraformer/arcgis";
+import Point from "@/geometry/Point";
+import Polyline from "@/geometry/Polyline";
+import Polygon from "@/geometry/Polygon";
 
 export interface GeoJSONLayerProperties extends LayerProperties {
-  url?: string;
-  source?: Graphic[];
+  url: string;
   renderer?: Renderer;
 }
 
 export default class GeoJSONLayer extends Layer {
   readonly type: LayerType = "geojson";
-  url?: string;
-  private _source: Graphic[] = [];
+  url: string;
+  protected source: Graphic[] = [];
   renderer?: Renderer;
 
   constructor(properties: GeoJSONLayerProperties) {
     super(properties);
     this.url = properties.url;
     this.renderer = properties.renderer;
-    
-    if (properties.source) {
-      this._source = properties.source;
-    } else if (properties.url) {
-      this.loadFromUrl(properties.url);
-    }
-  }
 
-  get source(): Graphic[] {
-    return this._source;
+    this.loadFromUrl(properties.url);
   }
 
   private async loadFromUrl(url: string) {
@@ -42,16 +33,15 @@ export default class GeoJSONLayer extends Layer {
       const geojson = await response.json();
       this.parseGeoJSON(geojson);
     } catch (error) {
-      console.error('Failed to load GeoJSON:', error);
+      console.error("Failed to load GeoJSON:", error);
     }
   }
 
   private parseGeoJSON(geojson: any) {
-    const features = geojson.type === 'FeatureCollection' 
-      ? geojson.features 
-      : [geojson];
+    const features =
+      geojson.type === "FeatureCollection" ? geojson.features : [geojson];
 
-    this._source = features.map((feature: any) => {
+    this.source = features.map((feature: any) => {
       const arcgisGeometry = geojsonToArcGIS(feature.geometry);
       const geometry = this.createGeometry(arcgisGeometry);
       return new Graphic({
@@ -64,7 +54,10 @@ export default class GeoJSONLayer extends Layer {
 
   private createGeometry(arcgisGeometry: any) {
     if (arcgisGeometry.x !== undefined && arcgisGeometry.y !== undefined) {
-      return new Point({ longitude: arcgisGeometry.x, latitude: arcgisGeometry.y });
+      return new Point({
+        longitude: arcgisGeometry.x,
+        latitude: arcgisGeometry.y,
+      });
     }
 
     if (arcgisGeometry.paths) {
@@ -75,7 +68,7 @@ export default class GeoJSONLayer extends Layer {
       return new Polygon({ rings: arcgisGeometry.rings });
     }
 
-    throw new Error('Unsupported geometry type');
+    throw new Error("Unsupported geometry type");
   }
 
   createLayerView(view: MapView): GeoJSONLayerView {
