@@ -16,7 +16,7 @@ export interface GeoJSONLayerProperties extends LayerProperties {
 export default class GeoJSONLayer extends Layer {
   readonly type: LayerType = "geojson";
   url: string;
-  protected source: Graphic[] = [];
+  source: Graphic[] = [];
   renderer?: Renderer;
 
   constructor(properties: GeoJSONLayerProperties) {
@@ -73,9 +73,5 @@ export default class GeoJSONLayer extends Layer {
 
   createLayerView(view: MapView): GeoJSONLayerView {
     return new GeoJSONLayerView({ view, layer: this });
-  }
-
-  getSource(): Graphic[] {
-    return this.source;
   }
 }
