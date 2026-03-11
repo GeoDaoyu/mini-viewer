@@ -24,7 +24,7 @@
 
 ### 核心架构
 - **Map/View 模式**：`Map` 类管理图层，`MapView` 类处理 canvas 渲染
-- **图层系统**：基础 `Layer` 类及专门实现（MapImageLayer, TileLayer, GeoJSONLayer）
+- **图层系统**：基础 `Layer` 类及专门实现（MapImageLayer, OSMTileLayer, GeoJSONLayer）
 - **LayerView 模式**：每种图层类型都有对应的 LayerView 进行渲染（MapImageLayerView, TileLayerView 等）
 - **几何系统**：坐标转换和空间参考处理在 `geometry/` 目录中
 - **符号系统**：渲染原语在 `symbols/` 目录中

@@ -50,7 +50,7 @@ export default class GeoJSONLayerView extends LayerView<GeoJSONLayer> {
       ],
     ]);
 
-    this.layer.source
+    this.layer.getSource()
       .map((graphic) => {
         const symbol = this.getSymbol(graphic);
         return { graphic, symbol };

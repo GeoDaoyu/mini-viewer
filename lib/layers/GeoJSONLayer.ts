@@ -74,4 +74,8 @@ export default class GeoJSONLayer extends Layer {
   createLayerView(view: MapView): GeoJSONLayerView {
     return new GeoJSONLayerView({ view, layer: this });
   }
+
+  getSource(): Graphic[] {
+    return this.source;
+  }
 }

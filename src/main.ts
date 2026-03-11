@@ -1,7 +1,7 @@
 import MapView from "@/views/MapView";
 import Map from "@/Map";
 import MapImageLayer from "@/layers/MapImageLayer";
-import TileLayer from "@/layers/TileLayer";
+import OSMTileLayer from "@/layers/OSMTileLayer";
 import GraphicsLayer from "@/layers/GraphicsLayer";
 import FeatureLayer from "@/layers/FeatureLayer";
 import GeoJSONLayer from "@/layers/GeoJSONLayer";
@@ -22,7 +22,7 @@ const view = new MapView({
   zoom: 4,
 });
 
-const tileLayer = new TileLayer({
+const tileLayer = new OSMTileLayer({
   id: "OSM Tile",
   title: "OSM Tile",
   url: "",
