@@ -1,8 +1,8 @@
 import LayerView from "./LayerView";
-import OSMTileLayer from "../../layers/OSMTileLayer";
+import OpenStreetMapLayer from "../../layers/OpenStreetMapLayer";
 import { lngLatToXY } from "../../geometry/support/webMercatorUtils";
 
-export default class OSMTileLayerView extends LayerView<OSMTileLayer> {
+export default class OpenStreetMapLayerView extends LayerView<OpenStreetMapLayer> {
   async render() {
     try {
       const { canvas, zoom } = this.view;
@@ -18,7 +18,7 @@ export default class OSMTileLayerView extends LayerView<OSMTileLayer> {
 
       await this.drawTiles(ctx, tileRange, zoom, canvas.width, canvas.height);
     } catch (error) {
-      console.error("Error in OSMTileLayerView render method:", error);
+      console.error("Error in OpenStreetMapLayerView render method:", error);
     }
   }
 
@@ -128,7 +128,10 @@ export default class OSMTileLayerView extends LayerView<OSMTileLayer> {
     zoom: number,
   ): Promise<HTMLImageElement> {
     return new Promise((resolve, reject) => {
-      const url = `https://api.maptiler.com/maps/openstreetmap/256/${zoom}/${col}/${row}.jpg?key=6ZGpPKRz8wRa8nV56Gwt`;
+      const url = this.layer.url
+        .replace("{z}", zoom.toString())
+        .replace("{x}", col.toString())
+        .replace("{y}", row.toString());
 
       const img = new Image();
       img.crossOrigin = "anonymous";
