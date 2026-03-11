@@ -1,6 +1,6 @@
 import Layer, { LayerProperties, LayerType } from "./Layer";
 import MapView from "@/views/MapView";
-import TileLayerView from "@/views/layers/TileLayerView";
+import OSMTileLayerView from "@/views/layers/OSMTileLayerView";
 
 export interface OSMTileLayerProperties extends LayerProperties {
   url: string;
@@ -14,7 +14,7 @@ export default class OSMTileLayer extends Layer {
     super(properties);
     this.url = properties.url;
   }
-  createLayerView(view: MapView): TileLayerView {
-    return new TileLayerView({ view, layer: this });
+  createLayerView(view: MapView): OSMTileLayerView {
+    return new OSMTileLayerView({ view, layer: this });
   }
 }

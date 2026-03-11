@@ -2,7 +2,7 @@ import LayerView from "./LayerView";
 import OSMTileLayer from "../../layers/OSMTileLayer";
 import { lngLatToXY } from "../../geometry/support/webMercatorUtils";
 
-export default class TileLayerView extends LayerView<OSMTileLayer> {
+export default class OSMTileLayerView extends LayerView<OSMTileLayer> {
   async render() {
     try {
       const { canvas, zoom } = this.view;
@@ -18,7 +18,7 @@ export default class TileLayerView extends LayerView<OSMTileLayer> {
 
       await this.drawTiles(ctx, tileRange, zoom, canvas.width, canvas.height);
     } catch (error) {
-      console.error("Error in TileLayerView render method:", error);
+      console.error("Error in OSMTileLayerView render method:", error);
     }
   }
 
