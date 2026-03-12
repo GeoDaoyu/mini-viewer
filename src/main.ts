@@ -1,6 +1,7 @@
 import MapView from "@/views/MapView";
 import Map from "@/Map";
 import MapImageLayer from "@/layers/MapImageLayer";
+import TileLayer from "@/layers/TileLayer";
 import OpenStreetMapLayer from "@/layers/OpenStreetMapLayer";
 import GraphicsLayer from "@/layers/GraphicsLayer";
 import FeatureLayer from "@/layers/FeatureLayer";
@@ -22,9 +23,9 @@ const view = new MapView({
   zoom: 4,
 });
 
-const tileLayer = new OpenStreetMapLayer({
-  id: "OSM Tile",
-  title: "OSM Tile",
+const tileLayer = new TileLayer({
+  id: "Tile",
+  title: "Tile",
 });
 view.map.add(tileLayer);
 
@@ -78,7 +79,10 @@ const graphicsLayer = new GraphicsLayer({
   id: "Graphics",
   graphics: [pointGraphic, lineGraphic, polygonGraphic],
 });
-
+const openStreetMapLayer = new OpenStreetMapLayer({
+  id: "OSM Tile",
+  title: "OSM Tile",
+});
 const mapImageLayer = new MapImageLayer({
   id: "World_Street_Map",
   title: "World_Street_Map",
@@ -133,6 +137,9 @@ const geojsonLayer = new GeoJSONLayer({
   url: "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.geojson",
 });
 
+const openStreetMapLayerCheckbox = document.getElementById(
+  "openstreetmap-layer",
+) as HTMLInputElement;
 const graphicsLayerCheckbox = document.getElementById(
   "graphics-layer",
 ) as HTMLInputElement;
@@ -146,6 +153,19 @@ const geojsonLayerCheckbox = document.getElementById(
   "geojson-layer",
 ) as HTMLInputElement;
 
+openStreetMapLayerCheckbox?.addEventListener("change", (e) => {
+  const checked = (e.target as HTMLInputElement).checked;
+  if (checked) {
+    if (!view.map.findLayerById("OSM Tile")) {
+      view.map.add(openStreetMapLayer);
+    }
+  } else {
+    const layer = view.map.findLayerById("OSM Tile");
+    if (layer) {
+      view.map.remove(openStreetMapLayer);
+    }
+  }
+});
 graphicsLayerCheckbox?.addEventListener("change", (e) => {
   const checked = (e.target as HTMLInputElement).checked;
   if (checked) {
