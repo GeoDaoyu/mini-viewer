@@ -8,11 +8,12 @@
 
 ## 支持的图层类型
 
-- **MapImageLayer** - 动态地图图片服务（ArcGIS MapServer）
-- **OSMTileLayer** - 切片地图服务（如 OSM、XYZ  tiles）
-- **GeoJSONLayer** - GeoJSON 格式矢量数据
+- **TileLayer** - ArcGIS切片服务图层
+- **MapImageLayer** - ArcGIS动态地图服务图层
+- **OpenStreetMapLayer ** - OpenStreet切片服务图层
+- **GeoJSONLayer** - GeoJSON 图层
 - **GraphicsLayer** - 客户端图形图层
-- **FeatureLayer** - 客户端要素图层
+- **FeatureLayer** - 要素图层
 
 ## 开发
 

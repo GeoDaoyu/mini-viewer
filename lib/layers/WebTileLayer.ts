@@ -2,6 +2,11 @@ import Layer, { LayerProperties, LayerType } from "./Layer";
 import MapView from "@/views/MapView";
 import WebTileLayerView from "@/views/layers/WebTileLayerView";
 
+/**
+ * 与ArcGIS JS API 不一致，
+ * 这里设计WebTileLayer作为基类
+ * TileLayer和OpenStreetMapLayer继承自WebTileLayer
+ */
 export interface WebTileLayerProperties extends LayerProperties {
   url: string;
 }
