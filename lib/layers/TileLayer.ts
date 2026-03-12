@@ -1,22 +1,22 @@
-import Layer, { LayerProperties, LayerType } from "./Layer";
+import WebTileLayer, { WebTileLayerProperties } from "./WebTileLayer";
+import { LayerType } from "./Layer";
 import MapView from "@/views/MapView";
-import OpenStreetMapLayerView from "@/views/layers/OpenStreetMapLayerView";
+import TileLayerView from "@/views/layers/TileLayerView";
 
 const URL = `https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}`;
 
-export interface TileLayerProperties extends LayerProperties {
+export interface TileLayerProperties extends Partial<Omit<WebTileLayerProperties, "url">> {
   url?: string;
 }
 
-export default class OpenStreetMapLayer extends Layer {
+export default class TileLayer extends WebTileLayer {
   readonly type: LayerType = "tile";
-  url: string;
 
-  constructor(properties: TileLayerProperties) {
-    super(properties);
-    this.url = properties.url || URL;
+  constructor(properties: TileLayerProperties = {}) {
+    super({ ...properties, url: properties.url || URL, id: properties.id || "tile-layer" });
   }
-  createLayerView(view: MapView): OpenStreetMapLayerView {
-    return new OpenStreetMapLayerView({ view, layer: this });
+
+  createLayerView(view: MapView): TileLayerView {
+    return new TileLayerView({ view, layer: this });
   }
 }
