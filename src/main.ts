@@ -26,6 +26,7 @@ const view = new MapView({
 const tileLayer = new TileLayer({
   id: "Tile",
   title: "Tile",
+  url: "https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
 });
 view.map.add(tileLayer);
 
@@ -82,6 +83,7 @@ const graphicsLayer = new GraphicsLayer({
 const openStreetMapLayer = new OpenStreetMapLayer({
   id: "OSM Tile",
   title: "OSM Tile",
+  url: "https://api.maptiler.com/maps/openstreetmap/256/{z}/{x}/{y}.jpg?key=6ZGpPKRz8wRa8nV56Gwt",
 });
 const mapImageLayer = new MapImageLayer({
   id: "World_Street_Map",
