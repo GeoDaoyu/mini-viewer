@@ -12,31 +12,21 @@ const view = new MapView({
 
 view.map.add(layerExamples.Tile.layer);
 
-const tileLayerCheckbox = document.getElementById(
-  "tile-layer",
-) as HTMLInputElement;
-const openStreetMapLayerCheckbox = document.getElementById(
-  "openstreetmap-layer",
-) as HTMLInputElement;
-const graphicsLayerCheckbox = document.getElementById(
-  "graphics-layer",
-) as HTMLInputElement;
-const mapImageLayerCheckbox = document.getElementById(
-  "mapimage-layer",
-) as HTMLInputElement;
-const featureLayerCheckbox = document.getElementById(
-  "feature-layer",
-) as HTMLInputElement;
-const geojsonLayerCheckbox = document.getElementById(
-  "geojson-layer",
-) as HTMLInputElement;
-
 const codePanelTitle = document.getElementById(
   "code-panel-title",
 ) as HTMLSpanElement;
 const codeDisplay = document.getElementById("code-display") as HTMLElement;
 const prevBtn = document.getElementById("code-prev-btn") as HTMLButtonElement;
 const nextBtn = document.getElementById("code-next-btn") as HTMLButtonElement;
+
+const layerConfig = [
+  { id: "Tile", checkboxId: "tile-layer" },
+  { id: "OSM Tile", checkboxId: "openstreetmap-layer" },
+  { id: "Graphics", checkboxId: "graphics-layer" },
+  { id: "World_Street_Map", checkboxId: "mapimage-layer" },
+  { id: "Feature", checkboxId: "feature-layer" },
+  { id: "GeoJSON", checkboxId: "geojson-layer" },
+] as const;
 
 let activeLayers: string[] = ["Tile"];
 let currentLayerIndex = 0;
@@ -79,20 +69,12 @@ nextBtn?.addEventListener("click", () => {
   }
 });
 
-function toggleLayer(checkbox: HTMLInputElement, layer: any, layerId: string) {
-  const checked = checkbox.checked;
-  if (checked) {
-    if (!view.map.findLayerById(layerId)) {
-      view.map.add(layer);
-      if (!activeLayers.includes(layerId)) {
-        activeLayers.push(layerId);
-      }
-    }
-  } else {
-    const existingLayer = view.map.findLayerById(layerId);
-    if (existingLayer) {
-      view.map.remove(existingLayer);
-    }
+function toggleLayer(layerId: string) {
+  const layer = layerExamples[layerId].layer;
+  const exists = view.map.findLayerById(layerId);
+
+  if (exists) {
+    view.map.remove(layer);
     const index = activeLayers.indexOf(layerId);
     if (index > -1) {
       activeLayers.splice(index, 1);
@@ -100,52 +82,18 @@ function toggleLayer(checkbox: HTMLInputElement, layer: any, layerId: string) {
         currentLayerIndex = Math.max(0, activeLayers.length - 1);
       }
     }
+  } else {
+    view.map.add(layer);
+    if (!activeLayers.includes(layerId)) {
+      activeLayers.push(layerId);
+    }
   }
   updateCodePanel();
 }
 
-tileLayerCheckbox?.addEventListener("change", (e) => {
-  toggleLayer(e.target as HTMLInputElement, layerExamples.Tile.layer, "Tile");
-});
-
-openStreetMapLayerCheckbox?.addEventListener("change", (e) => {
-  toggleLayer(
-    e.target as HTMLInputElement,
-    layerExamples["OSM Tile"].layer,
-    "OSM Tile",
-  );
-});
-
-graphicsLayerCheckbox?.addEventListener("change", (e) => {
-  toggleLayer(
-    e.target as HTMLInputElement,
-    layerExamples.Graphics.layer,
-    "Graphics",
-  );
-});
-
-mapImageLayerCheckbox?.addEventListener("change", (e) => {
-  toggleLayer(
-    e.target as HTMLInputElement,
-    layerExamples.World_Street_Map.layer,
-    "World_Street_Map",
-  );
-});
-
-featureLayerCheckbox?.addEventListener("change", (e) => {
-  toggleLayer(
-    e.target as HTMLInputElement,
-    layerExamples.Feature.layer,
-    "Feature",
-  );
-});
-
-geojsonLayerCheckbox?.addEventListener("change", (e) => {
-  toggleLayer(
-    e.target as HTMLInputElement,
-    layerExamples.GeoJSON.layer,
-    "GeoJSON",
-  );
+layerConfig.forEach(({ id, checkboxId }) => {
+  const checkbox = document.getElementById(checkboxId) as HTMLInputElement;
+  checkbox?.addEventListener("change", () => toggleLayer(id));
 });
 
 updateCodePanel();
