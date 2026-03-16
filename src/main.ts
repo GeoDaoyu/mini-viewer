@@ -7,7 +7,7 @@ const view = new MapView({
   map,
   container: "view",
   center: [120, 30],
-  zoom: 4,
+  zoom: 6,
 });
 
 view.map.add(layerExamples.Tile.layer);
@@ -34,9 +34,7 @@ const geojsonLayerCheckbox = document.getElementById(
 const codePanelTitle = document.getElementById(
   "code-panel-title",
 ) as HTMLSpanElement;
-const codeDisplay = document.getElementById(
-  "code-display",
-) as HTMLElement;
+const codeDisplay = document.getElementById("code-display") as HTMLElement;
 const prevBtn = document.getElementById("code-prev-btn") as HTMLButtonElement;
 const nextBtn = document.getElementById("code-next-btn") as HTMLButtonElement;
 

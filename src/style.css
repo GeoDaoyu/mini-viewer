@@ -61,10 +61,10 @@ body, html {
   position: absolute;
   bottom: 10px;
   right: 10px;
-  background: rgba(30, 30, 30, 0.95);
+  background: rgba(255, 255, 255, 0.9);
   padding: 15px;
   border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
   z-index: 1000;
   width: 350px;
   max-width: calc(100vw - 20px);
@@ -80,15 +80,15 @@ body, html {
 .code-panel-title {
   font-size: 14px;
   font-weight: 600;
-  color: #fff;
+  color: #333;
   flex: 1;
   text-align: center;
 }
 
 .code-nav-btn {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(0, 0, 0, 0.05);
   border: none;
-  color: #fff;
+  color: #333;
   padding: 5px 10px;
   border-radius: 4px;
   cursor: pointer;
@@ -97,7 +97,7 @@ body, html {
 }
 
 .code-nav-btn:hover {
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(0, 0, 0, 0.1);
 }
 
 .code-nav-btn:disabled {
@@ -106,7 +106,7 @@ body, html {
 }
 
 .code-content {
-  background: rgba(0, 0, 0, 0.3);
+  background: rgba(0, 0, 0, 0.05);
   border-radius: 4px;
   padding: 10px;
   margin: 0;
@@ -115,7 +115,7 @@ body, html {
 }
 
 .code-content code {
-  color: #a5d6ff;
+  color: #333;
   font-family: 'Consolas', 'Monaco', monospace;
   font-size: 12px;
   line-height: 1.5;
