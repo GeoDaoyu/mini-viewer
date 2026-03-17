@@ -29,7 +29,7 @@ const layerConfig = [
   { id: "GeoJSON", checkboxId: "geojson-layer" },
 ] as const;
 
-let activeLayers: string[] = ["Tile"];
+let activeLayers: string[] = ["OSM Tile"];
 let currentLayerIndex = 0;
 
 function updateCodePanel() {
