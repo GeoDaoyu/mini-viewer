@@ -1,5 +1,6 @@
 import tileLayer from "./TileLayer";
 import openStreetMapLayer from "./OpenStreetMapLayer";
+import tianDiTuLayer from "./TianDiTuLayer";
 import graphicsLayer from "./GraphicsLayer";
 import mapImageLayer from "./MapImageLayer";
 import featureLayer from "./FeatureLayer";
@@ -34,6 +35,18 @@ const openStreetMapLayer = new OpenStreetMapLayer({
 
 export default openStreetMapLayer;`,
     layer: openStreetMapLayer,
+  },
+  TianDiTu: {
+    code: `import TianDiTuLayer from "@/layers/TianDiTuLayer";
+
+const tianDiTuLayer = new TianDiTuLayer({
+  id: "TianDiTu",
+  title: "TianDiTu",
+  url: "https://t5.tianditu.gov.cn/img_w/wmts?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=img&STYLE=default&TILEMATRIXSET=w&FORMAT=tiles&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}&tk=your_token",
+});
+
+export default tianDiTuLayer;`,
+    layer: tianDiTuLayer,
   },
   Graphics: {
     code: `import GraphicsLayer from "@/layers/GraphicsLayer";
@@ -183,6 +196,7 @@ export default geojsonLayer;`,
 export const layerIdToName: Record<string, string> = {
   Tile: "TileLayer",
   "OSM Tile": "OpenStreetMapLayer",
+  TianDiTu: "TianDiTuLayer",
   Graphics: "GraphicsLayer",
   World_Street_Map: "MapImageLayer",
   Feature: "FeatureLayer",

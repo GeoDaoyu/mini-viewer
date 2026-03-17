@@ -10,7 +10,7 @@ const view = new MapView({
   zoom: 6,
 });
 
-view.map.add(layerExamples.Tile.layer);
+view.map.add(layerExamples["OSM Tile"].layer);
 
 const codePanelTitle = document.getElementById(
   "code-panel-title",
@@ -22,6 +22,7 @@ const nextBtn = document.getElementById("code-next-btn") as HTMLButtonElement;
 const layerConfig = [
   { id: "Tile", checkboxId: "tile-layer" },
   { id: "OSM Tile", checkboxId: "openstreetmap-layer" },
+  { id: "TianDiTu", checkboxId: "tianditu-layer" },
   { id: "Graphics", checkboxId: "graphics-layer" },
   { id: "World_Street_Map", checkboxId: "mapimage-layer" },
   { id: "Feature", checkboxId: "feature-layer" },

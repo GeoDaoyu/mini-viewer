@@ -2,6 +2,7 @@ import Map from "./Map";
 import MapView from "./views/MapView";
 import TileLayer from "./layers/TileLayer";
 import OpenStreetMapLayer from "./layers/OpenStreetMapLayer";
+import TianDiTuLayer from "./layers/TianDiTuLayer";
 import GraphicsLayer from "./layers/GraphicsLayer";
 import GeoJSONLayer from "./layers/GeoJSONLayer";
 import Point from "./geometry/Point";
@@ -14,6 +15,7 @@ export {
   MapView,
   TileLayer,
   OpenStreetMapLayer,
+  TianDiTuLayer,
   GraphicsLayer,
   GeoJSONLayer,
   Point,
