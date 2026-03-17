@@ -39,7 +39,7 @@ export type LayerType =
   | "stream"
   | "subtype-group"
   | "tile"
-  | "tian-ditu"
+  | "tian-di-tu"
   | "unknown"
   | "unsupported"
   | "vector-tile"

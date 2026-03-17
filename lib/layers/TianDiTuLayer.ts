@@ -6,7 +6,7 @@ import TianDiTuLayerView from "@/views/layers/TianDiTuLayerView";
 export interface TianDiTuLayerProperties extends WebTileLayerProperties {}
 
 export default class TianDiTuLayer extends WebTileLayer {
-  readonly type: LayerType = "tian-ditu";
+  readonly type: LayerType = "tian-di-tu";
 
   constructor(properties: TianDiTuLayerProperties) {
     super({
