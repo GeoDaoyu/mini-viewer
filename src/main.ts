@@ -25,7 +25,8 @@ const layerConfig = [
   { id: "TianDiTu", checkboxId: "tianditu-layer" },
   { id: "Graphics", checkboxId: "graphics-layer" },
   { id: "World_Street_Map", checkboxId: "mapimage-layer" },
-  { id: "Feature", checkboxId: "feature-layer" },
+  { id: "Feature Layer", checkboxId: "feature-layer" },
+  { id: "Feature Layer(source)", checkboxId: "feature-source-layer" },
   { id: "GeoJSON", checkboxId: "geojson-layer" },
 ] as const;
 

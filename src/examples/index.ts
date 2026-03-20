@@ -3,7 +3,7 @@ import openStreetMapLayer from "./OpenStreetMapLayer";
 import tianDiTuLayer from "./TianDiTuLayer";
 import graphicsLayer from "./GraphicsLayer";
 import mapImageLayer from "./MapImageLayer";
-import featureLayer from "./FeatureLayer";
+import { sourceFeatureLayer, urlFeatureLayer } from "./FeatureLayer";
 import geojsonLayer from "./GeoJSONLayer";
 
 export interface LayerExample {
@@ -125,7 +125,23 @@ const mapImageLayer = new MapImageLayer({
 export default mapImageLayer;`,
     layer: mapImageLayer,
   },
-  Feature: {
+  "Feature Layer": {
+    code: `import FeatureLayer from "@/layers/FeatureLayer";
+import { SimpleMarkerSymbol } from "@/symbols/SimpleMarkerSymbol";
+import { SimpleRenderer } from "@/renderers/SimpleRenderer";
+import { Color } from "@/Color";
+
+const urlFeatureLayer = new FeatureLayer({
+  id: "URLFeature",
+  title: "Feature Layer",
+  url: "https://services.arcgis.com/V6ZHFr6zdgNZuVG0/ArcGIS/rest/services/128peaks/FeatureServer/0/query?where=1%3D1&outFields=*&returnGeometry=true&f=pjson",
+  renderer: new SimpleRenderer(new SimpleMarkerSymbol(new Color([255, 0, 0, 1]), "circle", undefined, "8px")),
+});
+
+export default urlFeatureLayer;`,
+    layer: urlFeatureLayer,
+  },
+  "Feature Layer(source)": {
     code: `import FeatureLayer from "@/layers/FeatureLayer";
 import Graphic from "@/Graphic";
 import Polygon from "@/geometry/Polygon";
@@ -170,14 +186,14 @@ const featureGraphic2 = new Graphic({
   symbol: featureFillSymbol,
 });
 
-const featureLayer = new FeatureLayer({
-  id: "Feature",
-  title: "Feature Layer",
+const sourceFeatureLayer = new FeatureLayer({
+  id: "FeatureSource",
+  title: "Feature Layer(source)",
   source: [featureGraphic1, featureGraphic2],
 });
 
-export default featureLayer;`,
-    layer: featureLayer,
+export default sourceFeatureLayer;`,
+    layer: sourceFeatureLayer,
   },
   GeoJSON: {
     code: `import GeoJSONLayer from "@/layers/GeoJSONLayer";
@@ -199,6 +215,7 @@ export const layerIdToName: Record<string, string> = {
   TianDiTu: "TianDiTuLayer",
   Graphics: "GraphicsLayer",
   World_Street_Map: "MapImageLayer",
-  Feature: "FeatureLayer",
+  "Feature Layer": "FeatureLayer",
+  "Feature Layer(source)": "FeatureLayer",
   GeoJSON: "GeoJSONLayer",
 };
