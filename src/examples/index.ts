@@ -127,15 +127,11 @@ export default mapImageLayer;`,
   },
   "Feature Layer": {
     code: `import FeatureLayer from "@/layers/FeatureLayer";
-import { SimpleMarkerSymbol } from "@/symbols/SimpleMarkerSymbol";
-import { SimpleRenderer } from "@/renderers/SimpleRenderer";
-import { Color } from "@/Color";
 
 const urlFeatureLayer = new FeatureLayer({
-  id: "URLFeature",
+  id: "Feature Layer",
   title: "Feature Layer",
   url: "https://services.arcgis.com/V6ZHFr6zdgNZuVG0/ArcGIS/rest/services/128peaks/FeatureServer/0/query?where=1%3D1&outFields=*&returnGeometry=true&f=pjson",
-  renderer: new SimpleRenderer(new SimpleMarkerSymbol(new Color([255, 0, 0, 1]), "circle", undefined, "8px")),
 });
 
 export default urlFeatureLayer;`,
