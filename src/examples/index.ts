@@ -6,10 +6,6 @@ export interface LayerExample {
 interface LayerModule {
   default: any;
   code?: string;
-  sourceCode?: string;
-  urlCode?: string;
-  sourceFeatureLayer?: any;
-  urlFeatureLayer?: any;
 }
 
 const modules = import.meta.glob<LayerModule>("./*.ts", { eager: true });
@@ -32,7 +28,7 @@ const moduleMap: Record<string, keyof typeof modules> = {
   Graphics: "./GraphicsLayer.ts",
   World_Street_Map: "./MapImageLayer.ts",
   "Feature Layer": "./FeatureLayer.ts",
-  "Feature Layer(source)": "./FeatureLayer.ts",
+  "Feature Layer(source)": "./FeatureLayerWithSource.ts",
   GeoJSON: "./GeoJSONLayer.ts",
 };
 
@@ -40,21 +36,7 @@ export const layerExamples: Record<string, LayerExample> = {};
 
 for (const [id, filePath] of Object.entries(moduleMap)) {
   const module = modules[filePath];
-  let code: string;
-  let layer: any;
-
-  if (id === "Feature Layer") {
-    code = module.urlCode || module.code || "";
-    layer = module.urlFeatureLayer;
-  } else if (id === "Feature Layer(source)") {
-    code = module.sourceCode || module.code || "";
-    layer = module.sourceFeatureLayer;
-  } else {
-    code = module.code || "";
-    layer = module.default;
-  }
-
-  layerExamples[id] = { code, layer };
+  layerExamples[id] = { code: module.code || "", layer: module.default };
 }
 
 export { layerIdToName };
