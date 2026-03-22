@@ -5,10 +5,10 @@ export interface LayerExample {
 
 interface LayerModule {
   default: any;
-  code?: string;
 }
 
 const modules = import.meta.glob<LayerModule>("./*.ts", { eager: true });
+const rawCodes = import.meta.glob<string>("./*.ts", { as: "raw", eager: true });
 
 const layerIdToName: Record<string, string> = {
   Tile: "TileLayer",
@@ -36,7 +36,8 @@ export const layerExamples: Record<string, LayerExample> = {};
 
 for (const [id, filePath] of Object.entries(moduleMap)) {
   const module = modules[filePath];
-  layerExamples[id] = { code: module.code || "", layer: module.default };
+  const rawCode = rawCodes[filePath];
+  layerExamples[id] = { code: rawCode || "", layer: module.default };
 }
 
 export { layerIdToName };
