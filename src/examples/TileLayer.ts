@@ -1,8 +1,8 @@
 import TileLayer from "@/layers/TileLayer";
 
 const tileLayer = new TileLayer({
-  id: "Tile",
-  title: "Tile",
+  id: "TileLayer",
+  title: "TileLayer",
   url: "https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
 });
 

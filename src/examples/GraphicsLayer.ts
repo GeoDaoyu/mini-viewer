@@ -38,7 +38,7 @@ const polygonGraphic = new Graphic({
 });
 
 const graphicsLayer = new GraphicsLayer({
-  id: "Graphics",
+  id: "GraphicsLayer",
   graphics: [pointGraphic, lineGraphic, polygonGraphic],
 });
 

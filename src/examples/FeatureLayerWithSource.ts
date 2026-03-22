@@ -33,8 +33,7 @@ const featureGraphic2 = new Graphic({
 });
 
 const featureLayer = new FeatureLayer({
-  id: "Feature Layer(source)",
-  title: "Feature Layer(source)",
+  id: "FeatureLayerWithSource",
   source: [featureGraphic1, featureGraphic2],
 });
 

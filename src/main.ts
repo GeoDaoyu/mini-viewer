@@ -1,6 +1,6 @@
 import MapView from "@/views/MapView";
 import Map from "@/Map";
-import { layerExamples, layerIdToName } from "./examples";
+import { layerExamples, layerIdToName, layerConfig } from "./examples";
 
 const map = new Map();
 const view = new MapView({
@@ -10,7 +10,7 @@ const view = new MapView({
   zoom: 6,
 });
 
-view.map.add(layerExamples["OSM Tile"].layer);
+view.map.add(layerExamples["OpenStreetMapLayer"].layer);
 
 const codePanelTitle = document.getElementById(
   "code-panel-title",
@@ -19,18 +19,7 @@ const codeDisplay = document.getElementById("code-display") as HTMLElement;
 const prevBtn = document.getElementById("code-prev-btn") as HTMLButtonElement;
 const nextBtn = document.getElementById("code-next-btn") as HTMLButtonElement;
 
-const layerConfig = [
-  { id: "Tile", checkboxId: "tile-layer" },
-  { id: "OSM Tile", checkboxId: "openstreetmap-layer" },
-  { id: "TianDiTu", checkboxId: "tianditu-layer" },
-  { id: "Graphics", checkboxId: "graphics-layer" },
-  { id: "World_Street_Map", checkboxId: "mapimage-layer" },
-  { id: "Feature Layer", checkboxId: "feature-layer" },
-  { id: "Feature Layer(source)", checkboxId: "feature-source-layer" },
-  { id: "GeoJSON", checkboxId: "geojson-layer" },
-] as const;
-
-let activeLayers: string[] = ["OSM Tile"];
+let activeLayers: string[] = ["OpenStreetMapLayer"];
 let currentLayerIndex = 0;
 
 function updateCodePanel() {
@@ -93,7 +82,7 @@ function toggleLayer(layerId: string) {
   updateCodePanel();
 }
 
-layerConfig.forEach(({ id, checkboxId }) => {
+Object.entries(layerConfig).forEach(([id, { checkboxId }]) => {
   const checkbox = document.getElementById(checkboxId) as HTMLInputElement;
   checkbox?.addEventListener("change", () => toggleLayer(id));
 });

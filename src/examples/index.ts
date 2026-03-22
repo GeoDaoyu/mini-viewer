@@ -10,34 +10,31 @@ interface LayerModule {
 const modules = import.meta.glob<LayerModule>("./*.ts", { eager: true });
 const rawCodes = import.meta.glob<string>("./*.ts", { as: "raw", eager: true });
 
-const layerIdToName: Record<string, string> = {
-  Tile: "TileLayer",
-  "OSM Tile": "OpenStreetMapLayer",
-  TianDiTu: "TianDiTuLayer",
-  Graphics: "GraphicsLayer",
-  World_Street_Map: "MapImageLayer",
-  "Feature Layer": "FeatureLayer",
-  "Feature Layer(source)": "FeatureLayer",
-  GeoJSON: "GeoJSONLayer",
-};
+interface LayerConfig {
+  name: string;
+  checkboxId: string;
+}
 
-const moduleMap: Record<string, keyof typeof modules> = {
-  Tile: "./TileLayer.ts",
-  "OSM Tile": "./OpenStreetMapLayer.ts",
-  TianDiTu: "./TianDiTuLayer.ts",
-  Graphics: "./GraphicsLayer.ts",
-  World_Street_Map: "./MapImageLayer.ts",
-  "Feature Layer": "./FeatureLayer.ts",
-  "Feature Layer(source)": "./FeatureLayerWithSource.ts",
-  GeoJSON: "./GeoJSONLayer.ts",
+const layerConfig: Record<string, LayerConfig> = {
+  TileLayer: { name: "TileLayer", checkboxId: "tile-layer" },
+  OpenStreetMapLayer: { name: "OpenStreetMapLayer", checkboxId: "openstreetmap-layer" },
+  TianDiTuLayer: { name: "TianDiTuLayer", checkboxId: "tianditu-layer" },
+  GraphicsLayer: { name: "GraphicsLayer", checkboxId: "graphics-layer" },
+  MapImageLayer: { name: "MapImageLayer", checkboxId: "mapimage-layer" },
+  FeatureLayer: { name: "FeatureLayer", checkboxId: "feature-layer" },
+  FeatureLayerWithSource: { name: "FeatureLayer", checkboxId: "feature-source-layer" },
+  GeoJSONLayer: { name: "GeoJSONLayer", checkboxId: "geojson-layer" },
 };
 
 export const layerExamples: Record<string, LayerExample> = {};
+export const layerIdToName: Record<string, string> = {};
 
-for (const [id, filePath] of Object.entries(moduleMap)) {
+for (const [id, config] of Object.entries(layerConfig)) {
+  const filePath = `./${id}.ts`;
   const module = modules[filePath];
   const rawCode = rawCodes[filePath];
   layerExamples[id] = { code: rawCode || "", layer: module.default };
+  layerIdToName[id] = config.name;
 }
 
-export { layerIdToName };
+export { layerConfig };
