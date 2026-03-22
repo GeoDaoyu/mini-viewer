@@ -1,9 +1,6 @@
 import FeatureLayer from "@/layers/FeatureLayer";
 import Graphic from "@/Graphic";
 import Polygon from "@/geometry/Polygon";
-import { SimpleFillSymbol } from "@/symbols/SimpleFillSymbol";
-import { SimpleLineSymbol } from "@/symbols/SimpleLineSymbol";
-import { Color } from "@/Color";
 
 const polygon1 = new Polygon({
   rings: [
@@ -28,18 +25,11 @@ const polygon2 = new Polygon({
     ],
   ],
 });
-const featureFillSymbol = new SimpleFillSymbol(
-  new Color([255, 165, 0, 0.6]),
-  "solid",
-  new SimpleLineSymbol(new Color([255, 140, 0, 1]), 2),
-);
 const featureGraphic1 = new Graphic({
   geometry: polygon1,
-  symbol: featureFillSymbol,
 });
 const featureGraphic2 = new Graphic({
   geometry: polygon2,
-  symbol: featureFillSymbol,
 });
 
 const featureLayer = new FeatureLayer({
