@@ -6,7 +6,7 @@ export class SimpleLineSymbol extends LineSymbol {
   width: number;
 
   constructor(color?: Color, width: number = 1, style: string = 'solid') {
-    super(color || new Color([0, 0, 255, 1]), 'simple-line');
+    super(color || new Color([227, 139, 79, 1]), 'simple-line');
     this.style = style;
     this.width = width;
   }

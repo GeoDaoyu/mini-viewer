@@ -7,8 +7,8 @@ export class SimpleFillSymbol extends FillSymbol {
   outline: SimpleLineSymbol;
 
   constructor(color?: Color, style: string = 'solid', outline?: SimpleLineSymbol) {
-    super(color || new Color([0, 255, 0, 0.5]), 'simple-fill');
+    super(color || new Color([227, 139, 79, 0.8]), 'simple-fill');
     this.style = style;
-    this.outline = outline || new SimpleLineSymbol(new Color([0, 0, 0, 1]));
+    this.outline = outline || new SimpleLineSymbol(new Color([255, 255, 255, 1]), 1);
   }
 }
