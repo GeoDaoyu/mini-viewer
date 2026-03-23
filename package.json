@@ -18,11 +18,15 @@
   "scripts": {
     "start": "vite",
     "build": "tsc && vite build",
-    "demo": "vite build --config vite.config.demo.ts"
+    "demo": "vite build --config vite.config.demo.ts",
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
+    "docs:preview": "vitepress preview docs"
   },
   "devDependencies": {
     "typescript": "~5.9.2",
-    "vite": "^7.0.6"
+    "vite": "^7.0.6",
+    "vitepress": "^1.6.4"
   },
   "dependencies": {
     "@geodaoyu/accessor": "^3.0.2",
