@@ -10,7 +10,7 @@
 
 - **TileLayer** - ArcGIS切片服务图层
 - **MapImageLayer** - ArcGIS动态地图服务图层
-- **OpenStreetMapLayer ** - OpenStreet切片服务图层
+- **OpenStreetMapLayer** - OpenStreet切片服务图层
 - **GeoJSONLayer** - GeoJSON 图层
 - **GraphicsLayer** - 客户端图形图层
 - **FeatureLayer** - 要素图层
@@ -31,4 +31,3 @@ $ pnpm run build
 ## AI 协助
 
 本仓库由 [Qwen](https://tongyi.aliyun.com/) AI 协助开发。
-
