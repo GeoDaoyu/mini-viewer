@@ -17,8 +17,8 @@ export default defineConfig({
         collapsed: false,
         items: [
           { text: "概述", link: "/1-项目搭建/" },
-          { text: "Vite 搭建系统", link: "/1-项目搭建/vite搭建系统" },
-          { text: "创建 JS 类库", link: "/1-项目搭建/创建js类库" },
+          { text: "前置知识", link: "/1-项目搭建/前置知识" },
+          { text: "技术栈", link: "/1-项目搭建/技术栈" },
         ],
       },
       {
