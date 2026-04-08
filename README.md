@@ -1,10 +1,14 @@
-# Mini-Viewer
+# Mini-ArcGIS
 
 ## 介绍
 
-仿照ArcGIS实现一个超级简单的 GIS 引擎，可以加载一些常规地图服务。
+Mini-ArcGIS是一个蝇量级的ArcGIS实现，旨在帮助学习者理解ArcGIS的工作原理。
 
-该仓库仅是为了学习WebGIS开发，切勿在生产中使用。
+> ⚠️该仓库仅是为了学习WebGIS开发，切勿在生产中使用。
+
+## AI 协助
+
+Vibe Coding开发，本仓库由 [Qwen](https://tongyi.aliyun.com/) AI 协助开发。
 
 ## 支持的图层类型
 
@@ -28,6 +32,3 @@ $ pnpm start
 $ pnpm run build
 ```
 
-## AI 协助
-
-本仓库由 [Qwen](https://tongyi.aliyun.com/) AI 协助开发。
